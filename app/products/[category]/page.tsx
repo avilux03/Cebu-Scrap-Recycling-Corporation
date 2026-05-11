@@ -296,11 +296,10 @@ export default function ProductPage() {
   const category = catalog.find((c) => c.slug === categorySlug) ?? catalog[0];
   const [activeCatSlug, setActiveCatSlug] = useState(category.slug);
   const [activeItemSlug, setActiveItemSlug] = useState(
-    itemSlugFromQuery ?? category.items[0].slug,
+    itemSlugFromQuery ?? category.items[0].slug
   );
 
-  const activeCategory =
-    catalog.find((c) => c.slug === activeCatSlug) ?? catalog[0];
+  const activeCategory = catalog.find((c) => c.slug === activeCatSlug) ?? catalog[0];
   const activeItem =
     activeCategory.items.find((it) => it.slug === activeItemSlug) ??
     activeCategory.items[0];
@@ -314,9 +313,7 @@ export default function ProductPage() {
 
   const handleItemChange = (itemSlug: string) => {
     setActiveItemSlug(itemSlug);
-    router.replace(`/products/${activeCatSlug}?item=${itemSlug}`, {
-      scroll: false,
-    });
+    router.replace(`/products/${activeCatSlug}?item=${itemSlug}`, { scroll: false });
   };
 
   const hasImage = !!activeItem.image;
@@ -335,7 +332,6 @@ export default function ProductPage() {
           className="px-6 md:px-12 py-10"
         >
           <div className="mx-auto" style={{ maxWidth: "1280px" }}>
-            {/* Breadcrumb */}
             <div
               className="flex items-center gap-2 mb-4"
               style={{
@@ -344,10 +340,7 @@ export default function ProductPage() {
                 color: "rgba(46,79,33,0.55)",
               }}
             >
-              <Link
-                href="/"
-                style={{ color: "rgba(46,79,33,0.55)", textDecoration: "none" }}
-              >
+              <Link href="/" style={{ color: "rgba(46,79,33,0.55)", textDecoration: "none" }}>
                 Home
               </Link>
               <span>/</span>
@@ -384,19 +377,13 @@ export default function ProductPage() {
         </div>
 
         {/* Body: Sidebar + Content */}
-        <div
-          className="mx-auto px-6 md:px-12 py-10"
-          style={{ maxWidth: "1280px" }}
-        >
+        <div className="mx-auto px-6 md:px-12 py-10" style={{ maxWidth: "1280px" }}>
           <div className="flex flex-col md:flex-row gap-8">
+
             {/* ── LEFT SIDEBAR ── */}
             <aside
               className="w-full md:w-64 shrink-0 flex flex-col gap-2"
-              style={{
-                alignSelf: "flex-start",
-                position: "sticky",
-                top: "89px",
-              }}
+              style={{ alignSelf: "flex-start", position: "sticky", top: "89px" }}
             >
               {catalog.map((cat) => {
                 const isActiveCat = cat.slug === activeCatSlug;
@@ -406,9 +393,7 @@ export default function ProductPage() {
                       onClick={() => handleCategoryChange(cat.slug)}
                       className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-150"
                       style={{
-                        backgroundColor: isActiveCat
-                          ? "#2E4F21"
-                          : "transparent",
+                        backgroundColor: isActiveCat ? "#2E4F21" : "transparent",
                         color: isActiveCat ? "#A0F1BD" : "rgba(46,79,33,0.75)",
                         fontFamily: "'Work Sans', sans-serif",
                         fontSize: "0.9rem",
@@ -431,22 +416,16 @@ export default function ProductPage() {
                               onClick={() => handleItemChange(item.slug)}
                               className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150"
                               style={{
-                                backgroundColor: isActiveItem
-                                  ? "rgba(160,241,189,0.35)"
-                                  : "transparent",
-                                color: isActiveItem
-                                  ? "#2E4F21"
-                                  : "rgba(46,79,33,0.55)",
+                                backgroundColor: isActiveItem ? "rgba(160,241,189,0.35)" : "transparent",
+                                color: isActiveItem ? "#2E4F21" : "rgba(46,79,33,0.55)",
                                 fontFamily: "'Work Sans', sans-serif",
                                 fontSize: "0.83rem",
                                 fontWeight: isActiveItem ? "600" : "400",
                                 borderTop: "none",
                                 borderRight: "none",
                                 borderBottom: "none",
+                                borderLeft: isActiveItem ? "3px solid #2E4F21" : "3px solid transparent",
                                 cursor: "pointer",
-                                borderLeft: isActiveItem
-                                  ? "3px solid #2E4F21"
-                                  : "3px solid transparent",
                               }}
                             >
                               {item.label}
@@ -527,7 +506,7 @@ export default function ProductPage() {
                   }
                 `}</style>
 
-                {/* ── Product Image — only shown when image exists ── */}
+                {/* Product Image — only shown when image exists */}
                 {hasImage && (
                   <div
                     className="w-full relative"
@@ -541,6 +520,7 @@ export default function ProductPage() {
                       src={activeItem.image!}
                       alt={activeItem.label}
                       fill
+                      sizes="(max-width: 768px) 100vw, calc(100vw - 320px)"
                       className="object-cover"
                       priority
                     />
@@ -551,8 +531,7 @@ export default function ProductPage() {
                         left: 0,
                         right: 0,
                         height: "40%",
-                        background:
-                          "linear-gradient(to top, rgba(255,255,255,0.9), transparent)",
+                        background: "linear-gradient(to top, rgba(255,255,255,0.9), transparent)",
                       }}
                     />
                     <div
@@ -562,9 +541,7 @@ export default function ProductPage() {
                         backdropFilter: "blur(8px)",
                       }}
                     >
-                      <span style={{ fontSize: "0.9rem" }}>
-                        {activeCategory.emoji}
-                      </span>
+                      <span style={{ fontSize: "0.9rem" }}>{activeCategory.emoji}</span>
                       <span
                         style={{
                           color: "#A0F1BD",
@@ -580,9 +557,10 @@ export default function ProductPage() {
                   </div>
                 )}
 
-                {/* ── Product Info ── */}
+                {/* Product Info */}
                 <div className="p-8 md:p-10 flex flex-col gap-6">
-                  {/* Category badge — shown here when no image (replaces the overlay badge) */}
+
+                  {/* Category badge — only shown when no image */}
                   {!hasImage && (
                     <div className="flex items-center gap-2">
                       <span
@@ -617,11 +595,7 @@ export default function ProductPage() {
                     </h2>
                     <div
                       className="mt-2 rounded-full"
-                      style={{
-                        width: "48px",
-                        height: "4px",
-                        backgroundColor: "#A0F1BD",
-                      }}
+                      style={{ width: "48px", height: "4px", backgroundColor: "#A0F1BD" }}
                     />
                   </div>
 
@@ -645,9 +619,7 @@ export default function ProductPage() {
                       border: "1px solid rgba(160,241,189,0.5)",
                     }}
                   >
-                    <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>
-                      ♻️
-                    </span>
+                    <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>♻️</span>
                     <div>
                       <p
                         style={{
@@ -669,10 +641,9 @@ export default function ProductPage() {
                           margin: 0,
                         }}
                       >
-                        We offer competitive market-based pricing, fast
-                        transactions, and responsible processing. Whether you
-                        have a small load or a bulk shipment, we're ready to
-                        serve you.
+                        We offer competitive market-based pricing, fast transactions, and
+                        responsible processing. Whether you have a small load or a bulk
+                        shipment, we're ready to serve you.
                       </p>
                     </div>
                   </div>
@@ -714,8 +685,7 @@ export default function ProductPage() {
                               e.currentTarget.style.color = "#A0F1BD";
                             }}
                             onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor =
-                                "rgba(46,79,33,0.06)";
+                              e.currentTarget.style.backgroundColor = "rgba(46,79,33,0.06)";
                               e.currentTarget.style.color = "#2E4F21";
                             }}
                           >
