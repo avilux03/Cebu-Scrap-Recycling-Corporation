@@ -4,18 +4,47 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
-  { label: "Services", href: "/services" },
-  { label: "Contact", href: "/contact" },
+  { label: "Home", href: "#home" },
+  { label: "About", href: "#about" },
+  { label: "Services", href: "#services" },
+  { label: "Contact", href: "#contact" },
 ];
+
+function FooterNavLink({ href, label }: { href: string; label: string }) {
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+
+    const targetId = href.replace("#", "");
+    const element = document.getElementById(targetId);
+
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  return (
+    <Link
+      href={href}
+      onClick={handleClick}
+      style={{
+        color: "rgba(255,255,255,0.6)",
+        fontFamily: "'Work Sans', sans-serif",
+        fontSize: "0.9rem",
+        fontWeight: "400",
+        textDecoration: "none",
+        transition: "color 0.2s",
+      }}
+      onMouseEnter={(e) => (e.currentTarget.style.color = "#A0F1BD")}
+      onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+    >
+      {label}
+    </Link>
+  );
+}
 
 export default function Footer() {
   return (
-    <footer
-      style={{ backgroundColor: "#1a3a0e" }}
-      className="w-full"
-    >
+    <footer style={{ backgroundColor: "#1a3a0e" }} className="w-full">
       {/* Top divider accent */}
       <div style={{ height: "4px", backgroundColor: "#A0F1BD" }} />
 
@@ -27,14 +56,17 @@ export default function Footer() {
 
           {/* Col 1 — Logo + Tagline */}
           <div className="flex flex-col gap-4 md:col-span-1">
-            <Link href="/">
+            <Link href="/" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
               <Image
                 src="/logo.png"
                 alt="Cebu Scrap Recycling Corporation"
                 width={90}
                 height={90}
                 className="object-contain"
-                style={{ filter: "brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(60deg)", opacity: 0.9 }}
+                style={{
+                  filter: "brightness(0) invert(1) sepia(1) saturate(3) hue-rotate(60deg)",
+                  opacity: 0.9,
+                }}
               />
             </Link>
             <p
@@ -67,22 +99,7 @@ export default function Footer() {
             </h4>
             <div className="flex flex-col gap-3">
               {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    color: "rgba(255,255,255,0.6)",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "0.9rem",
-                    fontWeight: "400",
-                    textDecoration: "none",
-                    transition: "color 0.2s",
-                  }}
-                  onMouseEnter={e => (e.currentTarget.style.color = "#A0F1BD")}
-                  onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
-                >
-                  {link.label}
-                </Link>
+                <FooterNavLink key={link.href} href={link.href} label={link.label} />
               ))}
             </div>
           </div>
@@ -113,7 +130,13 @@ export default function Footer() {
                 San Fernando Pitalo,<br />
                 Cebu, Philippines
               </p>
-              <div style={{ height: "1px", backgroundColor: "rgba(160,241,189,0.15)", margin: "4px 0" }} />
+              <div
+                style={{
+                  height: "1px",
+                  backgroundColor: "rgba(160,241,189,0.15)",
+                  margin: "4px 0",
+                }}
+              />
               <div className="flex flex-col gap-1">
                 <p
                   style={{
@@ -177,8 +200,8 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.2s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#A0F1BD")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#A0F1BD")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
                 0962 930 5439
               </a>
@@ -191,8 +214,8 @@ export default function Footer() {
                   textDecoration: "none",
                   transition: "color 0.2s",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#A0F1BD")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#A0F1BD")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
                 contact@cebuscrap.com
               </a>
@@ -225,12 +248,11 @@ export default function Footer() {
                   transition: "color 0.2s",
                   width: "fit-content",
                 }}
-                onMouseEnter={e => (e.currentTarget.style.color = "#A0F1BD")}
-                onMouseLeave={e => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#A0F1BD")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
-                {/* Facebook icon */}
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
                 </svg>
                 Cebu Scrap Recycling Corporation
               </a>

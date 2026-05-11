@@ -12,11 +12,10 @@ export default function HeroSection() {
   }, []);
 
   return (
-   
-<section
-  className="relative h-screen overflow-hidden"
-  style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}
->
+    <section
+      className="relative h-screen overflow-hidden"
+      style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}
+    >
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -108,7 +107,7 @@ export default function HeroSection() {
           }}
         >
           {/* Primary — Sell to Us */}
-          <Link href="/services">
+          <Link href="/#sell">
             <button
               className="px-8 py-3 rounded-full font-medium transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95"
               style={{
@@ -124,7 +123,7 @@ export default function HeroSection() {
           </Link>
 
           {/* Secondary — Buy from Us */}
-          <Link href="/contact">
+          <Link href="/#buy">
             <button
               className="px-8 py-3 rounded-full font-medium transition-all duration-200 hover:bg-white hover:text-green-900 active:scale-95"
               style={{

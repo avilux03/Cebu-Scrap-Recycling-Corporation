@@ -52,11 +52,17 @@ const contactColumns = [
 const locations = [
   {
     label: "San Fernando Pitalo (Main)",
-    src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d125374.38876354!2d123.7!3d10.3!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a999b6f4a0e7db%3A0x4b1c60c5e6b7f8a0!2sSan%20Fernando%2C%20Cebu!5e0!3m2!1sen!2sph!4v1620000000000",
+    embedSrc:
+      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8!2d123.7172561!3d10.1751761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1715000000000",
+    mapsLink:
+      "https://www.google.com/maps/place/Cebu+Scrap+Recycling+Corporation/@10.1751761,123.7172561,17z",
   },
   {
     label: "Mag-abo Amlan Negros Oriental",
-    src: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d500000!2d123.0!3d10.5!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33aed1a4a4a4a4a4%3A0x4b1c60c5e6b7f8a0!2sNegros%20Occidental!5e0!3m2!1sen!2sph!4v1620000000000",
+    embedSrc:
+      "https://www.google.com/maps/embed?pb=!4v1715000000001!6m8!1m7!1sXTGAnCrXVngdjLLJR9_u9A!2m2!1d9.4662391!2d123.2170532!3f105.33!4f-1.74!5f0.7820865974627469",
+    mapsLink:
+      "https://www.google.com/maps/@9.4662391,123.2170532,3a,75y,105.33h,91.74t/data=!3m7!1e1!3m5!1sXTGAnCrXVngdjLLJR9_u9A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-1.7382077888765508%26panoid%3DXTGAnCrXVngdjLLJR9_u9A%26yaw%3D105.3275944068205!7i16384!8i8192",
   },
 ];
 
@@ -67,7 +73,6 @@ export default function ContactSection() {
 
   return (
     <>
-      {/* Inline responsive styles — no extra CSS file needed */}
       <style>{`
         .contact-columns-grid {
           display: grid;
@@ -84,13 +89,11 @@ export default function ContactSection() {
         .contact-col-pad-middle { padding: 0 2rem; }
         .contact-col-pad-last   { padding: 0 0 0 2rem; }
 
-        /* Mobile — stack columns vertically */
         @media (max-width: 640px) {
           .contact-columns-grid {
             grid-template-columns: 1fr;
           }
 
-          /* Turn vertical separators into horizontal rules */
           .contact-col-separator {
             display: block;
             width: 100%;
@@ -102,6 +105,58 @@ export default function ContactSection() {
           .contact-col-pad-last {
             padding: 0;
           }
+        }
+
+        .map-card {
+          position: relative;
+          width: 100%;
+          overflow: hidden;
+          border-radius: 16px;
+          border: 1.5px solid rgba(46,79,33,0.15);
+          box-shadow: 0 4px 24px rgba(46,79,33,0.15);
+          aspect-ratio: 16/10;
+          display: block;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        .map-card iframe {
+          width: 100%;
+          height: 100%;
+          border: 0;
+          display: block;
+          pointer-events: none;
+        }
+
+        .map-card-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(46,79,33,0);
+          transition: background 0.2s ease;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .map-card:hover .map-card-overlay {
+          background: rgba(46,79,33,0.12);
+        }
+
+        .map-card-overlay-label {
+          opacity: 0;
+          transition: opacity 0.2s ease;
+          background: rgba(46,79,33,0.85);
+          color: #A0F1BD;
+          padding: 8px 18px;
+          border-radius: 999px;
+          font-family: 'Work Sans', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 600;
+          letter-spacing: 0.02em;
+        }
+
+        .map-card:hover .map-card-overlay-label {
+          opacity: 1;
         }
       `}</style>
 
@@ -171,23 +226,14 @@ export default function ContactSection() {
                     display: "flex",
                     flexDirection: "column",
                     gap: "0.5rem",
-                    /* Extra vertical breathing room when stacked on mobile */
                     paddingTop: "1rem",
                     paddingBottom: "1rem",
                   }}
                 >
-                  {/* Emoji */}
-                  <span
-                    style={{
-                      fontSize: "1.8rem",
-                      lineHeight: 1,
-                      marginBottom: "0.25rem",
-                    }}
-                  >
+                  <span style={{ fontSize: "1.8rem", lineHeight: 1, marginBottom: "0.25rem" }}>
                     {col.emoji}
                   </span>
 
-                  {/* Title */}
                   <h3
                     style={{
                       color: "#2E4F21",
@@ -201,22 +247,13 @@ export default function ContactSection() {
                     {col.title}
                   </h3>
 
-                  {/* Lines */}
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "0.25rem",
-                    }}
-                  >
+                  <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
                     {col.lines.map((line) =>
                       line.href ? (
                         <a
                           key={line.text}
                           href={line.href}
-                          target={
-                            line.href.startsWith("http") ? "_blank" : undefined
-                          }
+                          target={line.href.startsWith("http") ? "_blank" : undefined}
                           rel="noreferrer"
                           style={{
                             color: "rgba(46,79,33,0.7)",
@@ -248,7 +285,6 @@ export default function ContactSection() {
                   </div>
                 </div>
 
-                {/* Separator — vertical on desktop, horizontal on mobile */}
                 {i < contactColumns.length - 1 && (
                   <div className="contact-col-separator" />
                 )}
@@ -296,26 +332,23 @@ export default function ContactSection() {
                     {loc.label}
                   </p>
 
-                  <div
-                    className="w-full overflow-hidden"
-                    style={{
-                      borderRadius: "16px",
-                      border: "1.5px solid rgba(46,79,33,0.15)",
-                      boxShadow: "0 4px 24px rgba(46,79,33,0.15)",
-                      aspectRatio: "16/10",
-                    }}
+                  <a
+                    href={loc.mapsLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="map-card"
                   >
                     <iframe
-                      src={loc.src}
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, display: "block" }}
+                      src={loc.embedSrc}
                       allowFullScreen
                       loading="lazy"
                       referrerPolicy="no-referrer-when-downgrade"
                       title={loc.label}
                     />
-                  </div>
+                    <div className="map-card-overlay">
+                      <span className="map-card-overlay-label">Open in Google Maps ↗</span>
+                    </div>
+                  </a>
                 </div>
               ))}
             </div>
