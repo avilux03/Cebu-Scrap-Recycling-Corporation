@@ -203,7 +203,7 @@ export default function Footer() {
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#A0F1BD")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
-                0962 930 5439
+               0948 055 8001
               </a>
               <a
                 href="mailto:contact@cebuscrap.com"
@@ -236,7 +236,7 @@ export default function Footer() {
                 Follow Us
               </p>
               <a
-                href="https://facebook.com/CebuScrapRecyclingCorporation"
+                href="https://web.facebook.com/profile.php?id=61576023680563"
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-center gap-2"

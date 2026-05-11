@@ -25,7 +25,7 @@ const contactColumns = [
     emoji: "📞",
     title: "Phone & Email",
     lines: [
-      { text: "0962 930 5439", href: "tel:09629305439" },
+      { text: "0948 055 8001", href: "tel:09629305439" },
       { text: "contact@cebuscrap.com", href: "mailto:contact@cebuscrap.com" },
     ],
   },
@@ -43,7 +43,7 @@ const contactColumns = [
     lines: [
       {
         text: "Facebook: Cebu Scrap Recycling Corporation",
-        href: "https://facebook.com/CebuScrapRecyclingCorporation",
+        href: "https://web.facebook.com/profile.php?id=61576023680563",
       },
     ],
   },

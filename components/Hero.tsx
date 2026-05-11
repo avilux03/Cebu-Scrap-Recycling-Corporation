@@ -14,12 +14,26 @@ export default function HeroSection() {
   return (
     <section
       className="relative h-screen overflow-hidden"
-      style={{ width: "100vw", marginLeft: "calc(50% - 50vw)" }}
+      style={{
+        width: "100vw",
+        marginLeft: "calc(50% - 50vw)",
+        maxWidth: "100vw",
+        left: 0,
+        right: 0,
+      }}
     >
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: "url('/hero.png')" }}
+        className="absolute bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/hero.png')",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          width: "100%",
+          height: "100%",
+        }}
       />
 
       {/* Dark green overlay */}
@@ -28,16 +42,20 @@ export default function HeroSection() {
         style={{ backgroundColor: "rgba(26, 46, 19, 0.58)" }}
       />
 
-      {/* Subtle mint accent bar on the left */}
+      {/* Subtle mint accent bar on the left — hidden on mobile */}
       <div
-        className="absolute left-0 top-0 h-full w-1"
+        className="absolute left-0 top-0 h-full w-1 hidden md:block"
         style={{ backgroundColor: "#A0F1BD" }}
       />
 
       {/* Content */}
       <div
-        className="relative z-10 h-full flex flex-col justify-center px-12 md:px-24 w-full"
-        style={{ maxWidth: "1280px", margin: "0 auto" }}
+        className="relative z-10 h-full flex flex-col justify-center w-full md:items-start items-center md:text-left text-center"
+        style={{
+          padding: "0 clamp(1.5rem, 6vw, 6rem)",
+          maxWidth: "1280px",
+          margin: "0 auto",
+        }}
       >
         {/* Label */}
         <div
@@ -99,7 +117,7 @@ export default function HeroSection() {
 
         {/* Buttons */}
         <div
-          className="flex flex-wrap gap-4 transition-all duration-700 ease-out"
+          className="flex flex-wrap gap-4 transition-all duration-700 ease-out justify-center md:justify-start"
           style={{
             opacity: visible ? 1 : 0,
             transform: visible ? "translateY(0)" : "translateY(24px)",
