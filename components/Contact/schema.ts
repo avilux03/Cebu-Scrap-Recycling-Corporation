@@ -11,9 +11,7 @@ export const contactSchema = yup.object({
     .string()
     .oneOf(["sell", "buy"], "Please select an inquiry type")
     .required("Please select an inquiry type"),
-  message: yup.string().trim()
-    .min(100, "Message must be at least 100 characters")
-    .required("Message is required"),
+  message: yup.string().trim().required("Message is required"),
   imageUrl: yup.string().url().nullable().optional(),
   consent: yup.boolean().oneOf([true], "You must accept the terms").required(),
 })

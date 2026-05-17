@@ -21,17 +21,20 @@ type ContactFormData = {
   consent: boolean
 }
 
+type SubmitStatus = "idle" | "success" | "error"
+
 export default function ContactFormRHF() {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
+  const [submitStatus, setSubmitStatus] = useState<SubmitStatus>("idle")
+  const [errorMessage, setErrorMessage] = useState<string>("")
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setValue,
   } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema) as any,
   })
@@ -63,11 +66,15 @@ export default function ContactFormRHF() {
   }
 
   const onSubmit = async (data: ContactFormData) => {
+    // Clear any previous status
+    setSubmitStatus("idle")
+    setErrorMessage("")
+
     try {
       let imageUrl: string | null = null
       if (imageFile) {
         imageUrl = await uploadImage(imageFile)
-        if (!imageUrl) throw new Error("Image upload failed")
+        if (!imageUrl) throw new Error("Image upload failed. Please try again.")
       }
 
       const res = await fetch("/api/contact/saveContactInformation", {
@@ -75,13 +82,19 @@ export default function ContactFormRHF() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, imageUrl }),
       })
-      if (!res.ok) throw new Error("Failed to submit")
-      alert("Message sent successfully!")
+
+      if (!res.ok) throw new Error("Our server couldn't process your message. Please try again shortly.")
+
+      setSubmitStatus("success")
       reset()
       setImageFile(null)
       setImagePreview(null)
-    } catch (err) {
-      alert("Something went wrong. Please try again.")
+
+      // Auto-dismiss success after 8 seconds
+      setTimeout(() => setSubmitStatus("idle"), 8000)
+    } catch (err: any) {
+      setSubmitStatus("error")
+      setErrorMessage(err?.message || "Something went wrong. Please try again.")
     }
   }
 
@@ -111,6 +124,170 @@ export default function ContactFormRHF() {
             style={{ width: "50px", height: "4px", backgroundColor: "#2E4F21" }}
           />
         </div>
+
+        {/* ── MODAL OVERLAY ── */}
+        {submitStatus !== "idle" && (
+          <>
+            <style>{`
+              @keyframes backdropIn {
+                from { opacity: 0; }
+                to   { opacity: 1; }
+              }
+              @keyframes modalPop {
+                from { opacity: 0; transform: scale(0.92) translateY(16px); }
+                to   { opacity: 1; transform: scale(1) translateY(0); }
+              }
+            `}</style>
+            <div
+              role="dialog"
+              aria-modal="true"
+              onClick={() => setSubmitStatus("idle")}
+              style={{
+                position: "fixed",
+                inset: 0,
+                zIndex: 9999,
+                backgroundColor: "rgba(0,0,0,0.55)",
+                backdropFilter: "blur(4px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: "24px",
+                animation: "backdropIn 0.25s ease",
+              }}
+            >
+              <div
+                onClick={e => e.stopPropagation()}
+                style={{
+                  backgroundColor: "#ffffff",
+                  borderRadius: "24px",
+                  padding: "40px 36px",
+                  maxWidth: "420px",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center",
+                  gap: "16px",
+                  boxShadow: "0 24px 64px rgba(0,0,0,0.2)",
+                  animation: "modalPop 0.3s cubic-bezier(0.34,1.56,0.64,1)",
+                }}
+              >
+                {submitStatus === "success" ? (
+                  <>
+                    {/* Success icon */}
+                    <div style={{
+                      width: "72px",
+                      height: "72px",
+                      borderRadius: "50%",
+                      backgroundColor: "#A0F1BD",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}>
+                      <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#2E4F21" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </div>
+                    <h3 style={{
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontWeight: "800",
+                      fontSize: "1.4rem",
+                      color: "#2E4F21",
+                      margin: 0,
+                      letterSpacing: "-0.02em",
+                    }}>
+                      Message Sent!
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontSize: "0.95rem",
+                      color: "#4b5563",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}>
+                      Thanks for reaching out! We've received your inquiry and will get back to you shortly.
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setSubmitStatus("idle")}
+                      style={{
+                        marginTop: "8px",
+                        backgroundColor: "#2E4F21",
+                        color: "#A0F1BD",
+                        fontFamily: "'Work Sans', sans-serif",
+                        fontWeight: "700",
+                        fontSize: "0.95rem",
+                        padding: "12px 32px",
+                        borderRadius: "999px",
+                        border: "none",
+                        cursor: "pointer",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      Done
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    {/* Error icon */}
+                    <div style={{
+                      width: "72px",
+                      height: "72px",
+                      borderRadius: "50%",
+                      backgroundColor: "#fee2e2",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}>
+                      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                      </svg>
+                    </div>
+                    <h3 style={{
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontWeight: "800",
+                      fontSize: "1.4rem",
+                      color: "#7f1d1d",
+                      margin: 0,
+                      letterSpacing: "-0.02em",
+                    }}>
+                      Submission Failed
+                    </h3>
+                    <p style={{
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontSize: "0.95rem",
+                      color: "#4b5563",
+                      lineHeight: "1.6",
+                      margin: 0,
+                    }}>
+                      {errorMessage}
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => setSubmitStatus("idle")}
+                      style={{
+                        marginTop: "8px",
+                        backgroundColor: "#ef4444",
+                        color: "#ffffff",
+                        fontFamily: "'Work Sans', sans-serif",
+                        fontWeight: "700",
+                        fontSize: "0.95rem",
+                        padding: "12px 32px",
+                        borderRadius: "999px",
+                        border: "none",
+                        cursor: "pointer",
+                        letterSpacing: "-0.01em",
+                      }}
+                    >
+                      Try Again
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          </>
+        )}
 
         {/* Form Card */}
         <form
@@ -206,7 +383,7 @@ export default function ContactFormRHF() {
             <textarea
               {...register("message")}
               rows={5}
-              placeholder="Your message... (min. 100 characters)"
+              placeholder="Your message..."
               style={{
                 ...inputStyle,
                 resize: "none",
@@ -220,7 +397,10 @@ export default function ContactFormRHF() {
 
           {/* Image Upload */}
           <div className="flex flex-col gap-1.5">
-            <label style={labelStyle}>Photo of Scrap Material <span style={{ fontWeight: 400, opacity: 0.6 }}>(optional)</span></label>
+            <label style={labelStyle}>
+              Photo of Scrap Material{" "}
+              <span style={{ fontWeight: 400, opacity: 0.6 }}>(optional)</span>
+            </label>
             <label
               style={{
                 display: "flex",
@@ -245,8 +425,8 @@ export default function ContactFormRHF() {
               ) : (
                 <>
                   <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="rgba(160,241,189,0.7)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
-                    <polyline points="21 15 16 10 5 21"/>
+                    <rect x="3" y="3" width="18" height="18" rx="2" /><circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
                   </svg>
                   <span style={{ color: "rgba(255,255,255,0.5)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem" }}>
                     Click to upload image (max 5MB)
