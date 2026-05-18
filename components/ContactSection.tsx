@@ -33,8 +33,8 @@ const contactColumns = [
     emoji: "📍",
     title: "Address",
     lines: [
-      { text: "San Fernando Pitalo (Main)", href: null },
-      { text: "Mag-abo Amlan Negros Oriental", href: null },
+      { text: "Pitalo, San Fernando Cebu (Main)", href: null },
+      { text: "Mag-abo, Amlan, Negros Oriental", href: null },
     ],
   },
   {
@@ -51,14 +51,14 @@ const contactColumns = [
 
 const locations = [
   {
-    label: "San Fernando Pitalo (Main)",
+    label: "Pitalo, San Fernando Cebu (Main)",
     embedSrc:
       "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8!2d123.7172561!3d10.1751761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1715000000000",
     mapsLink:
       "https://www.google.com/maps/place/Cebu+Scrap+Recycling+Corporation/@10.1751761,123.7172561,17z",
   },
   {
-    label: "Mag-abo Amlan Negros Oriental",
+    label: "Mag-abo, Amlan, Negros Oriental",
     embedSrc:
       "https://www.google.com/maps/embed?pb=!4v1715000000001!6m8!1m7!1sXTGAnCrXVngdjLLJR9_u9A!2m2!1d9.4662391!2d123.2170532!3f105.33!4f-1.74!5f0.7820865974627469",
     mapsLink:
@@ -113,7 +113,7 @@ export default function ContactSection() {
           overflow: hidden;
           border-radius: 16px;
           border: 1.5px solid rgba(46,79,33,0.15);
-          box-shadow: 0 4px 24px rgba(46,79,33,0.15);
+          box-shadow: 0 4px 24px rgba(46,79,33,0.10);
           aspect-ratio: 16/10;
           display: block;
           text-decoration: none;
@@ -145,8 +145,8 @@ export default function ContactSection() {
         .map-card-overlay-label {
           opacity: 0;
           transition: opacity 0.2s ease;
-          background: rgba(46,79,33,0.85);
-          color: #A0F1BD;
+          background: #2E4F21;
+          color: #ffffff;
           padding: 8px 18px;
           border-radius: 999px;
           font-family: 'Work Sans', sans-serif;
@@ -162,7 +162,7 @@ export default function ContactSection() {
 
       <section
         className="w-full py-24 px-6 md:px-12"
-        style={{ backgroundColor: "#A0F1BD" }}
+        style={{ backgroundColor: "#ffffff" }}
       >
         <div
           className="mx-auto flex flex-col gap-14"
@@ -256,7 +256,7 @@ export default function ContactSection() {
                           target={line.href.startsWith("http") ? "_blank" : undefined}
                           rel="noreferrer"
                           style={{
-                            color: "rgba(46,79,33,0.7)",
+                            color: "rgba(46,79,33,0.65)",
                             fontFamily: "'Work Sans', sans-serif",
                             fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
                             fontWeight: "400",
@@ -271,7 +271,7 @@ export default function ContactSection() {
                         <span
                           key={line.text}
                           style={{
-                            color: "rgba(46,79,33,0.7)",
+                            color: "rgba(46,79,33,0.65)",
                             fontFamily: "'Work Sans', sans-serif",
                             fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
                             fontWeight: "400",

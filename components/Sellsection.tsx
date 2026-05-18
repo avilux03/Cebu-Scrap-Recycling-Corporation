@@ -80,11 +80,11 @@ function MaterialCard({
       onClick={onClick}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="rounded-2xl p-6 flex flex-col gap-4 cursor-pointer select-none"
+      className="rounded-2xl p-6 flex flex-col gap-4 select-none"
       style={{
         backgroundColor: hovered ? "#2E4F21" : "#ffffff",
         border: hovered
-          ? "1.5px solid rgba(160,241,189,0.4)"
+          ? "1.5px solid rgba(255,255,255,0.2)"
           : "1.5px solid rgba(46,79,33,0.12)",
         opacity: inView ? 1 : 0,
         transform: inView
@@ -96,6 +96,7 @@ function MaterialCard({
         boxShadow: hovered
           ? "0 16px 40px rgba(46,79,33,0.25)"
           : "0 4px 20px rgba(46,79,33,0.08)",
+        cursor: "pointer",
       }}
     >
       {/* Emoji Icon */}
@@ -103,10 +104,10 @@ function MaterialCard({
         className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
         style={{
           backgroundColor: hovered
-            ? "rgba(160,241,189,0.12)"
+            ? "rgba(255,255,255,0.1)"
             : "rgba(46,79,33,0.06)",
           boxShadow: hovered
-            ? "0 4px 16px rgba(160,241,189,0.15)"
+            ? "0 4px 16px rgba(255,255,255,0.08)"
             : "0 2px 8px rgba(46,79,33,0.10)",
           transition: "all 0.3s ease",
           fontSize: "1.8rem",
@@ -120,7 +121,7 @@ function MaterialCard({
       <div className="flex flex-col gap-2 flex-1">
         <h3
           style={{
-            color: hovered ? "#A0F1BD" : "#2E4F21",
+            color: hovered ? "#ffffff" : "#2E4F21",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "1.05rem",
             fontWeight: "700",
@@ -132,7 +133,7 @@ function MaterialCard({
         </h3>
         <p
           style={{
-            color: hovered ? "rgba(247,254,249,0.65)" : "#5a5a5a",
+            color: hovered ? "rgba(255,255,255,0.7)" : "rgba(46,79,33,0.6)",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "0.9rem",
             fontWeight: "400",
@@ -148,7 +149,7 @@ function MaterialCard({
       <div
         className="flex items-center mt-1"
         style={{
-          color: hovered ? "#A0F1BD" : "rgba(46,79,33,0.4)",
+          color: hovered ? "rgba(255,255,255,0.9)" : "rgba(46,79,33,0.4)",
           fontFamily: "'Work Sans', sans-serif",
           fontSize: "0.8rem",
           fontWeight: "600",
@@ -183,7 +184,7 @@ export default function SellSection() {
     <>
       <section
         className="w-full py-24 px-6 md:px-12"
-        style={{ backgroundColor: "#A0F1BD" }}
+        style={{ backgroundColor: "#ffffff" }}
       >
         <div
           className="mx-auto flex flex-col gap-14"
@@ -220,7 +221,7 @@ export default function SellSection() {
             />
             <p
               style={{
-                color: "rgba(46,79,33,0.7)",
+                color: "rgba(46,79,33,0.65)",
                 fontFamily: "'Work Sans', sans-serif",
                 fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)",
                 fontWeight: "400",
@@ -252,9 +253,11 @@ export default function SellSection() {
                 className="px-10 py-3 rounded-full font-semibold transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95"
                 style={{
                   backgroundColor: "#2E4F21",
-                  color: "#F5F5F0",
+                  color: "#ffffff",
                   fontFamily: "'Work Sans', sans-serif",
                   fontSize: "16px",
+                  cursor: "pointer",
+                  border: "none",
                 }}
               >
                 Sell Your Scrap Now

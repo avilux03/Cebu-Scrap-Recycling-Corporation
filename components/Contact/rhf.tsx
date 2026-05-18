@@ -1,13 +1,13 @@
 "use client"
-import { useState } from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { contactSchema } from "./schema"
 import { createClient } from "@supabase/supabase-js"
 
 const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!
+  process.env["NEXT_PUBLIC_SUPABASE_URL"] as string,
+  process.env["NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"] as string
 )
 
 type ContactFormData = {
@@ -23,7 +23,7 @@ type ContactFormData = {
 
 type SubmitStatus = "idle" | "success" | "error"
 
-export default function ContactFormRHF() {
+export default function ContactFormRHF(): React.ReactElement {
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -39,7 +39,7 @@ export default function ContactFormRHF() {
     resolver: yupResolver(contactSchema) as any,
   })
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0]
     if (!file) return
     if (file.size > 5 * 1024 * 1024) {
@@ -65,8 +65,7 @@ export default function ContactFormRHF() {
     return data.publicUrl
   }
 
-  const onSubmit = async (data: ContactFormData) => {
-    // Clear any previous status
+  const onSubmit = async (data: ContactFormData): Promise<void> => {
     setSubmitStatus("idle")
     setErrorMessage("")
 
@@ -90,11 +89,12 @@ export default function ContactFormRHF() {
       setImageFile(null)
       setImagePreview(null)
 
-      // Auto-dismiss success after 8 seconds
       setTimeout(() => setSubmitStatus("idle"), 8000)
-    } catch (err: any) {
+    } catch (err: unknown) {
       setSubmitStatus("error")
-      setErrorMessage(err?.message || "Something went wrong. Please try again.")
+      setErrorMessage(
+        err instanceof Error ? err.message : "Something went wrong. Please try again."
+      )
     }
   }
 
@@ -125,7 +125,7 @@ export default function ContactFormRHF() {
           />
         </div>
 
-        {/* ── MODAL OVERLAY ── */}
+        {/* Modal Overlay */}
         {submitStatus !== "idle" && (
           <>
             <style>{`
@@ -156,7 +156,7 @@ export default function ContactFormRHF() {
               }}
             >
               <div
-                onClick={e => e.stopPropagation()}
+                onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
                 style={{
                   backgroundColor: "#ffffff",
                   borderRadius: "24px",
@@ -174,7 +174,6 @@ export default function ContactFormRHF() {
               >
                 {submitStatus === "success" ? (
                   <>
-                    {/* Success icon */}
                     <div style={{
                       width: "72px",
                       height: "72px",
@@ -229,7 +228,6 @@ export default function ContactFormRHF() {
                   </>
                 ) : (
                   <>
-                    {/* Error icon */}
                     <div style={{
                       width: "72px",
                       height: "72px",
@@ -328,8 +326,8 @@ export default function ContactFormRHF() {
               type="text"
               placeholder="Full Name"
               style={inputStyle}
-              onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
-              onBlur={e => Object.assign(e.target.style, inputStyle)}
+              onFocus={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputFocusStyle)}
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputStyle)}
             />
             {errors.fullName && <p style={errorStyle}>{errors.fullName.message}</p>}
           </div>
@@ -343,8 +341,8 @@ export default function ContactFormRHF() {
                 type="tel"
                 placeholder="e.g. 09171234567"
                 style={inputStyle}
-                onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={e => Object.assign(e.target.style, inputStyle)}
+                onFocus={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputFocusStyle)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputStyle)}
               />
               {errors.phoneNumber && <p style={errorStyle}>{errors.phoneNumber.message}</p>}
             </div>
@@ -356,8 +354,8 @@ export default function ContactFormRHF() {
                 type="email"
                 placeholder="you@example.com"
                 style={inputStyle}
-                onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
-                onBlur={e => Object.assign(e.target.style, inputStyle)}
+                onFocus={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputFocusStyle)}
+                onBlur={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputStyle)}
               />
               {errors.email && <p style={errorStyle}>{errors.email.message}</p>}
             </div>
@@ -371,8 +369,8 @@ export default function ContactFormRHF() {
               type="text"
               placeholder="e.g. 123 Mango Ave, Cebu City"
               style={inputStyle}
-              onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
-              onBlur={e => Object.assign(e.target.style, inputStyle)}
+              onFocus={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputFocusStyle)}
+              onBlur={(e: React.FocusEvent<HTMLInputElement>) => Object.assign(e.target.style, inputStyle)}
             />
             {errors.address && <p style={errorStyle}>{errors.address.message}</p>}
           </div>
@@ -389,8 +387,8 @@ export default function ContactFormRHF() {
                 resize: "none",
                 lineHeight: "1.6",
               }}
-              onFocus={e => Object.assign(e.target.style, inputFocusStyle)}
-              onBlur={e => Object.assign(e.target.style, { ...inputStyle, resize: "none" })}
+              onFocus={(e: React.FocusEvent<HTMLTextAreaElement>) => Object.assign(e.target.style, inputFocusStyle)}
+              onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) => Object.assign(e.target.style, { ...inputStyle, resize: "none" })}
             />
             {errors.message && <p style={errorStyle}>{errors.message.message}</p>}
           </div>
@@ -498,7 +496,7 @@ export default function ContactFormRHF() {
             type="submit"
             disabled={isSubmitting}
             style={{
-              backgroundColor: "#A0F1BD",
+              backgroundColor: "#ffffff",
               color: "#2E4F21",
               fontFamily: "'Work Sans', sans-serif",
               fontSize: "1rem",
@@ -513,8 +511,12 @@ export default function ContactFormRHF() {
               minWidth: "180px",
               letterSpacing: "-0.01em",
             }}
-            onMouseEnter={e => !isSubmitting && ((e.target as HTMLElement).style.transform = "scale(1.04)")}
-            onMouseLeave={e => ((e.target as HTMLElement).style.transform = "scale(1)")}
+            onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => {
+              if (!isSubmitting) (e.currentTarget as HTMLButtonElement).style.transform = "scale(1.04)"
+            }}
+            onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => {
+              (e.currentTarget as HTMLButtonElement).style.transform = "scale(1)"
+            }}
           >
             {isSubmitting ? "Sending..." : "Send Message"}
           </button>

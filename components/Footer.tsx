@@ -127,7 +127,7 @@ export default function Footer() {
                   lineHeight: "1.6",
                 }}
               >
-                San Fernando Pitalo,<br />
+                Pitalo, San Fernando<br />
                 Cebu, Philippines
               </p>
               <div
@@ -150,28 +150,18 @@ export default function Footer() {
                 >
                   Business Hours
                 </p>
-                <p
-                  style={{
-                    color: "rgba(255,255,255,0.6)",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "0.88rem",
-                    lineHeight: "1.6",
-                  }}
-                >
-                  Mon – Sat: 8:00 AM – 5:00 PM
-                </p>
-                <p
-                  style={{
-                    color: "rgba(160,241,189,0.55)",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "0.78rem",
-                    lineHeight: "1.5",
-                    fontStyle: "italic",
-                  }}
-                >
-                  Overtime available for special orders,<br />
-                  deliveries &amp; pickups.
-                </p>
+               <p
+  style={{
+    color: "rgba(255,255,255,0.6)",
+    fontFamily: "'Work Sans', sans-serif",
+    fontSize: "0.88rem",
+    lineHeight: "1.6",
+    whiteSpace: "pre-line",
+  }}
+>
+  {"Monday – Saturday\n8:00 AM – 5:00 PM"}
+</p>
+                
               </div>
             </div>
           </div>

@@ -220,10 +220,8 @@ export default function AboutSection() {
               lineHeight: "1.1",
             }}
           >
-            About{" "}
-            <span style={{ color: "#A0F1BD", WebkitTextStroke: "2px #2E4F21" }}>
-              Us
-            </span>
+            About Us {" "}
+            
           </h2>
           <p
             style={{

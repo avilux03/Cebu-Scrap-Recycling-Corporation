@@ -79,7 +79,6 @@ function ServiceCard({
         opacity: inView ? 1 : 0,
         transform: inView ? "translateY(0)" : "translateY(40px)",
         transition: "opacity 0.7s ease, transform 0.7s ease",
-        flexDirection: isReversed ? undefined : undefined,
       }}
     >
       {/* Text content */}
@@ -90,7 +89,7 @@ function ServiceCard({
         <div className="flex items-start gap-4">
           <span
             style={{
-              color: "#A0F1BD",
+              color: "#2E4F21",
               fontFamily: "'Work Sans', sans-serif",
               fontSize: "clamp(2.8rem, 6vw, 4.5rem)",
               fontWeight: "800",
@@ -118,7 +117,7 @@ function ServiceCard({
 
         <p
           style={{
-            color: "#3a3a3a",
+            color: "rgba(46,79,33,0.65)",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "clamp(0.85rem, 2.5vw, 1rem)",
             fontWeight: "400",
@@ -135,11 +134,11 @@ function ServiceCard({
               key={tag}
               className="px-3 py-1 rounded-full text-xs font-semibold"
               style={{
-                backgroundColor: "rgba(160,241,189,0.25)",
-                color: "#2E4F21",
+                backgroundColor: "#2E4F21",
+                color: "#ffffff",
                 fontFamily: "'Work Sans', sans-serif",
                 letterSpacing: "0.04em",
-                border: "1px solid rgba(160,241,189,0.5)",
+                border: "1px solid #2E4F21",
               }}
             >
               {tag}
@@ -156,8 +155,8 @@ function ServiceCard({
           <div
             className="rounded-2xl overflow-hidden"
             style={{
-              boxShadow: "0 8px 32px rgba(46,79,33,0.18)",
-              border: "2px solid rgba(160,241,189,0.3)",
+              boxShadow: "0 8px 32px rgba(46,79,33,0.15)",
+              border: "2px solid rgba(46,79,33,0.12)",
             }}
           >
             <div className="relative w-full" style={{ aspectRatio: "16/10" }}>
@@ -172,7 +171,7 @@ function ServiceCard({
                 className="absolute inset-0"
                 style={{
                   background:
-                    "linear-gradient(to top, rgba(26,46,19,0.35) 0%, transparent 60%)",
+                    "linear-gradient(to top, rgba(46,79,33,0.35) 0%, transparent 60%)",
                 }}
               />
             </div>
@@ -182,8 +181,8 @@ function ServiceCard({
             className="rounded-2xl flex flex-col items-center justify-center gap-6 p-10"
             style={{
               aspectRatio: "16/10",
-              backgroundColor: "#0f1f0b",
-              border: "1.5px solid rgba(160,241,189,0.15)",
+              backgroundColor: "#2E4F21",
+              border: "1.5px solid rgba(46,79,33,0.2)",
               boxShadow: "0 8px 32px rgba(46,79,33,0.18)",
               position: "relative",
               overflow: "hidden",
@@ -195,7 +194,7 @@ function ServiceCard({
               style={{
                 fontSize: "10rem",
                 fontWeight: "900",
-                color: "rgba(160,241,189,0.04)",
+                color: "rgba(255,255,255,0.05)",
                 fontFamily: "'Work Sans', sans-serif",
                 right: "-1.5rem",
                 bottom: "-2rem",
@@ -209,7 +208,7 @@ function ServiceCard({
 
             <p
               style={{
-                color: "rgba(247,254,249,0.7)",
+                color: "rgba(255,255,255,0.75)",
                 fontFamily: "'Work Sans', sans-serif",
                 fontSize: "0.9rem",
                 fontWeight: "500",
@@ -264,11 +263,11 @@ export default function ServicesSection() {
           </h2>
           <div
             className="rounded-full"
-            style={{ width: "50px", height: "4px", backgroundColor: "#A0F1BD" }}
+            style={{ width: "50px", height: "4px", backgroundColor: "#2E4F21" }}
           />
           <p
             style={{
-              color: "#3a3a3a",
+              color: "rgba(46,79,33,0.65)",
               fontFamily: "'Work Sans', sans-serif",
               fontSize: "clamp(0.88rem, 3vw, 1.05rem)",
               fontWeight: "400",
@@ -286,7 +285,7 @@ export default function ServicesSection() {
           className="w-full"
           style={{
             height: "1px",
-            backgroundColor: "rgba(160,241,189,0.5)",
+            backgroundColor: "rgba(46,79,33,0.12)",
             marginTop: "-24px",
           }}
         />
@@ -301,7 +300,7 @@ export default function ServicesSection() {
                   className="w-full mt-12 md:mt-16"
                   style={{
                     height: "1px",
-                    backgroundColor: "rgba(160,241,189,0.4)",
+                    backgroundColor: "rgba(46,79,33,0.10)",
                   }}
                 />
               )}

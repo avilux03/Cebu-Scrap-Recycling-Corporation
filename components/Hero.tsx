@@ -36,16 +36,16 @@ export default function HeroSection() {
         }}
       />
 
-      {/* Dark green overlay */}
+      {/* Slight green overlay */}
       <div
         className="absolute inset-0"
-        style={{ backgroundColor: "rgba(26, 46, 19, 0.58)" }}
+        style={{ backgroundColor: "rgba(46, 79, 33, 0.45)" }}
       />
 
-      {/* Subtle mint accent bar on the left — hidden on mobile */}
+      {/* White accent bar on the left — hidden on mobile */}
       <div
         className="absolute left-0 top-0 h-full w-1 hidden md:block"
-        style={{ backgroundColor: "#A0F1BD" }}
+        style={{ backgroundColor: "#2E4F21" }}
       />
 
       {/* Content */}
@@ -69,8 +69,9 @@ export default function HeroSection() {
           <span
             className="text-xs font-semibold tracking-widest uppercase px-3 py-1 rounded-full border"
             style={{
-              color: "#A0F1BD",
-              borderColor: "#A0F1BD",
+                color: "#FFFFFF",
+                borderColor: "#2E4F21",
+              backgroundColor: "#2E4F21",
               fontFamily: "'Work Sans', sans-serif",
               letterSpacing: "0.15em",
             }}
@@ -83,7 +84,7 @@ export default function HeroSection() {
         <h1
           className="mb-6 leading-tight transition-all duration-700 ease-out"
           style={{
-            color: "#F5F5F0",
+            color: "#ffffff",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "clamp(2.2rem, 5vw, 4rem)",
             fontWeight: "700",
@@ -94,14 +95,14 @@ export default function HeroSection() {
           }}
         >
           Cebu Scrap Recycling{" "}
-          <span style={{ color: "#A0F1BD" }}>Corporation</span>
+          <span style={{ color: "#FFFFFF" }}>Corporation</span>
         </h1>
 
         {/* Tagline */}
         <p
           className="mb-10 leading-relaxed transition-all duration-700 ease-out"
           style={{
-            color: "#C8E6C0",
+            color: "rgba(255,255,255,0.8)",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "clamp(1rem, 2vw, 1.2rem)",
             fontWeight: "400",
@@ -129,11 +130,13 @@ export default function HeroSection() {
             <button
               className="px-8 py-3 rounded-full font-medium transition-all duration-200 hover:opacity-90 hover:scale-105 active:scale-95"
               style={{
-                backgroundColor: "#A0F1BD",
-                color: "#2E4F21",
+                backgroundColor: "#2E4F21",
+                color: "#ffffff",
                 fontFamily: "'Work Sans', sans-serif",
                 fontSize: "16px",
-                fontWeight: "600",
+                fontWeight: "700",
+                border: "none",
+                cursor: "pointer",
               }}
             >
               Sell to Us
@@ -143,14 +146,15 @@ export default function HeroSection() {
           {/* Secondary — Buy from Us */}
           <Link href="/#buy">
             <button
-              className="px-8 py-3 rounded-full font-medium transition-all duration-200 hover:bg-white hover:text-green-900 active:scale-95"
+              className="px-8 py-3 rounded-full font-medium transition-all duration-200 active:scale-95"
               style={{
                 backgroundColor: "transparent",
-                color: "#F5F5F0",
+                color: "#ffffff",
                 fontFamily: "'Work Sans', sans-serif",
                 fontSize: "16px",
                 fontWeight: "500",
-                border: "2px solid #F5F5F0",
+                border: "2px solid #ffffff",
+                cursor: "pointer",
               }}
             >
               Buy from Us
@@ -159,12 +163,11 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* Bottom fade into page */}
+      {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 w-full h-24 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(to bottom, transparent, rgba(26,46,19,0.18))",
+          background: "linear-gradient(to bottom, transparent, rgba(46,79,33,0.3))",
         }}
       />
     </section>

@@ -37,14 +37,14 @@ const categories: Category[] = [
       {
         name: "Galvanized Iron (GI) Sheets",
         image: "/galvanized.png",
-        tag: "Thickness: 0.3 / 0.4 / 0.5 | Length: 6, 8, 10, 12 ft",
+        tag: "Thickness: 0.2 mm / 0.4 mm / 0.5 mm | Length: 6, 8, 10, 12 ft",
         description:
           "Galvanized iron sheets are coated for rust resistance, ideal for roofing in all weather conditions. We sell them in multiple thicknesses and lengths to fit any project size.",
       },
       {
         name: "Galvalume Sheets",
         image: "/galvalume.png",
-        tag: "Thickness: 0.3 / 0.4 / 0.5 | Length: 6, 8, 10, 12 ft",
+        tag: "Thickness: 0.2 mm / 0.4 mm / 0.5 mm | Length: 6, 8, 10, 12 ft",
         description:
           "Galvalume combines steel with aluminum-zinc coating for superior corrosion resistance and longevity. Available in standard sizes perfect for residential and commercial roofing.",
       },
