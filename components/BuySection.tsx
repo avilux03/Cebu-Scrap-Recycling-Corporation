@@ -283,17 +283,16 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
   const charOk = charCount >= 100;
 
   return (
-    /* Backdrop */
     <div
       onClick={onClose}
       style={{
         position: "fixed",
         inset: 0,
         zIndex: 50,
-        backgroundColor: "rgba(10,25,10,0.72)",
-        backdropFilter: "blur(4px)",
+        backgroundColor: "rgba(10,25,10,0.65)",
+        backdropFilter: "blur(6px)",
         display: "flex",
-        alignItems: "flex-end",        /* mobile: sheet from bottom */
+        alignItems: "flex-end",
         justifyContent: "center",
         padding: 0,
       }}
@@ -304,32 +303,47 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
         style={{
           position: "relative",
           width: "100%",
-          maxHeight: "93dvh",
+          maxWidth: "560px",
+          maxHeight: "92dvh",
           backgroundColor: "#F7FFF9",
           borderRadius: "24px 24px 0 0",
-          boxShadow: "0 -8px 48px rgba(0,0,0,0.28)",
+          boxShadow: "0 -12px 60px rgba(0,0,0,0.32)",
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",
         }}
       >
-        {/* ── STICKY HEADER (always visible) ── */}
+        {/* ── STICKY HEADER ── */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "16px 20px",
+            padding: "14px 18px",
             backgroundColor: "#2E4F21",
             flexShrink: 0,
           }}
         >
-          {/* Drag handle pill (mobile feel) */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <p style={{ color: "rgba(160,241,189,0.65)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", margin: 0 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            <p style={{
+              color: "rgba(160,241,189,0.6)",
+              fontFamily: "'Work Sans', sans-serif",
+              fontSize: "0.68rem",
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              margin: 0,
+            }}>
               Inquire about
             </p>
-            <h4 style={{ color: "#A0F1BD", fontFamily: "'Work Sans', sans-serif", fontSize: "1rem", fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
+            <h4 style={{
+              color: "#A0F1BD",
+              fontFamily: "'Work Sans', sans-serif",
+              fontSize: "0.95rem",
+              fontWeight: 700,
+              margin: 0,
+              lineHeight: 1.3,
+            }}>
               {product.name}
             </h4>
           </div>
@@ -337,37 +351,78 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
             onClick={onClose}
             aria-label="Close"
             style={{
-              width: 36, height: 36, borderRadius: "50%",
-              backgroundColor: "rgba(160,241,189,0.15)",
-              border: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              color: "#A0F1BD", flexShrink: 0,
+              width: 34,
+              height: 34,
+              borderRadius: "50%",
+              backgroundColor: "rgba(160,241,189,0.12)",
+              border: "1.5px solid rgba(160,241,189,0.25)",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#A0F1BD",
+              flexShrink: 0,
+              transition: "background-color 0.2s",
             }}
           >
-            <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-              <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+              <path d="M2 2l12 12M14 2L2 14" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
             </svg>
           </button>
         </div>
 
         {/* ── SCROLLABLE BODY ── */}
         <div style={{ overflowY: "auto", overscrollBehavior: "contain", flex: 1 }}>
-
           {submitted ? (
-            /* Success state */
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 16, padding: "56px 24px", textAlign: "center" }}>
-              <div style={{ width: 64, height: 64, borderRadius: "50%", backgroundColor: "rgba(160,241,189,0.25)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem" }}>✅</div>
-              <h4 style={{ color: "#2E4F21", fontFamily: "'Work Sans', sans-serif", fontSize: "1.15rem", fontWeight: 700, margin: 0 }}>Inquiry Sent!</h4>
-              <p style={{ color: "#5a5a5a", fontFamily: "'Work Sans', sans-serif", fontSize: "0.9rem", lineHeight: 1.7, maxWidth: 280, margin: 0 }}>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: 16,
+              padding: "56px 24px",
+              textAlign: "center",
+            }}>
+              <div style={{
+                width: 64,
+                height: 64,
+                borderRadius: "50%",
+                backgroundColor: "rgba(160,241,189,0.25)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "1.8rem",
+              }}>✅</div>
+              <h4 style={{
+                color: "#2E4F21",
+                fontFamily: "'Work Sans', sans-serif",
+                fontSize: "1.15rem",
+                fontWeight: 700,
+                margin: 0,
+              }}>Inquiry Sent!</h4>
+              <p style={{
+                color: "#5a5a5a",
+                fontFamily: "'Work Sans', sans-serif",
+                fontSize: "0.9rem",
+                lineHeight: 1.7,
+                maxWidth: 280,
+                margin: 0,
+              }}>
                 Thank you, <strong>{form.fullName}</strong>! We'll reach out shortly about <strong>{product.name}</strong>.
               </p>
               <button
                 onClick={onClose}
                 style={{
-                  marginTop: 8, padding: "10px 28px", borderRadius: 999,
-                  backgroundColor: "#2E4F21", color: "#A0F1BD",
-                  fontFamily: "'Work Sans', sans-serif", fontSize: "0.9rem", fontWeight: 600,
-                  border: "none", cursor: "pointer",
+                  marginTop: 8,
+                  padding: "10px 28px",
+                  borderRadius: 999,
+                  backgroundColor: "#2E4F21",
+                  color: "#A0F1BD",
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: "0.9rem",
+                  fontWeight: 600,
+                  border: "none",
+                  cursor: "pointer",
                 }}
               >
                 Close
@@ -375,25 +430,64 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
             </div>
           ) : (
             <>
-              {/* Product image banner */}
-              <div style={{ position: "relative", width: "100%", height: 200, flexShrink: 0 }}>
-                <Image src={product.image} alt={product.name} fill style={{ objectFit: "cover" }} sizes="100vw" />
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(26,46,19,0.7) 0%, transparent 60%)" }} />
+              {/* ── PRODUCT IMAGE — full-width, 16:9, clear ── */}
+              <div style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "16/9",
+                flexShrink: 0,
+                backgroundColor: "#c8dfc0",
+              }}>
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center" }}
+                  sizes="560px"
+                  priority
+                />
+                {/* Subtle vignette — bottom only, light touch */}
+                <div style={{
+                  position: "absolute",
+                  inset: 0,
+                  background: "linear-gradient(to top, rgba(20,40,14,0.42) 0%, rgba(0,0,0,0.04) 45%, transparent 100%)",
+                }} />
+
+                {/* Tag badge overlaid bottom-left */}
+                <div style={{
+                  position: "absolute",
+                  bottom: 12,
+                  left: 14,
+                  padding: "5px 13px",
+                  borderRadius: 999,
+                  backgroundColor: "rgba(16,32,10,0.68)",
+                  backdropFilter: "blur(8px)",
+                  border: "1px solid rgba(160,241,189,0.28)",
+                }}>
+                  <span style={{
+                    color: "#A0F1BD",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.72rem",
+                    fontWeight: 600,
+                    letterSpacing: "0.03em",
+                  }}>
+                    {product.tag}
+                  </span>
+                </div>
               </div>
 
-              {/* Product info */}
-              <div style={{ padding: "16px 20px 0", backgroundColor: "#fff", display: "flex", flexDirection: "column", gap: 8 }}>
-                <span style={{
-                  alignSelf: "flex-start", padding: "3px 12px", borderRadius: 999,
-                  backgroundColor: "rgba(160,241,189,0.3)", color: "#2E4F21",
-                  fontFamily: "'Work Sans', sans-serif", fontSize: "0.75rem", fontWeight: 600, letterSpacing: "0.04em",
+              {/* ── PRODUCT DESCRIPTION ── */}
+              <div style={{
+                padding: "18px 20px 0",
+                backgroundColor: "#fff",
+              }}>
+                <p style={{
+                  color: "#4a4a4a",
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: "0.86rem",
+                  lineHeight: 1.75,
+                  margin: 0,
                 }}>
-                  {product.tag}
-                </span>
-                <h3 style={{ color: "#2E4F21", fontFamily: "'Work Sans', sans-serif", fontSize: "1.05rem", fontWeight: 700, margin: 0, lineHeight: 1.3 }}>
-                  {product.name}
-                </h3>
-                <p style={{ color: "#4a4a4a", fontFamily: "'Work Sans', sans-serif", fontSize: "0.86rem", lineHeight: 1.75, margin: 0 }}>
                   {product.description}
                 </p>
               </div>
@@ -401,9 +495,15 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
               {/* Divider */}
               <div style={{ height: 1, backgroundColor: "rgba(46,79,33,0.10)", margin: "16px 0" }} />
 
-              {/* Form */}
-              <div style={{ padding: "0 20px 32px", display: "flex", flexDirection: "column", gap: 16 }}>
-                <p style={{ color: "#5a5a5a", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem", lineHeight: 1.7, margin: 0 }}>
+              {/* ── FORM ── */}
+              <div style={{ padding: "0 20px 36px", display: "flex", flexDirection: "column", gap: 16 }}>
+                <p style={{
+                  color: "#5a5a5a",
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: "0.85rem",
+                  lineHeight: 1.7,
+                  margin: 0,
+                }}>
                   Fill in your details and we'll reach out with pricing and availability.
                 </p>
 
@@ -465,7 +565,14 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
                     onFocus={(e) => { if (!errors.message) e.target.style.borderColor = "#2E4F21"; }}
                     onBlur={(e) => { if (!errors.message) e.target.style.borderColor = "rgba(46,79,33,0.18)"; }}
                   />
-                  <p style={{ fontFamily: "'Work Sans', sans-serif", fontSize: "0.72rem", textAlign: "right", color: charOk ? "rgba(46,79,33,0.45)" : "#c0392b", margin: "4px 0 0", transition: "color 0.2s" }}>
+                  <p style={{
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.72rem",
+                    textAlign: "right",
+                    color: charOk ? "rgba(46,79,33,0.45)" : "#c0392b",
+                    margin: "4px 0 0",
+                    transition: "color 0.2s",
+                  }}>
                     {charCount}/100 {charOk ? "✓" : "min"}
                   </p>
                 </Field>
@@ -482,34 +589,58 @@ function InquiryModal({ product, onClose }: { product: Product | null; onClose: 
                       }}
                       style={{ marginTop: 3, accentColor: "#2E4F21", width: 15, height: 15, flexShrink: 0 }}
                     />
-                    <span style={{ color: "#4a4a4a", fontFamily: "'Work Sans', sans-serif", fontSize: "0.78rem", lineHeight: 1.6 }}>
+                    <span style={{
+                      color: "#4a4a4a",
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontSize: "0.78rem",
+                      lineHeight: 1.6,
+                    }}>
                       I agree to be contacted by Cebu Scrap Recycling Corporation regarding my inquiry. My information will not be shared with third parties.
                     </span>
                   </label>
                   {errors.consent && (
-                    <p style={{ color: "#c0392b", fontFamily: "'Work Sans', sans-serif", fontSize: "0.75rem", margin: 0 }}>{errors.consent}</p>
+                    <p style={{ color: "#c0392b", fontFamily: "'Work Sans', sans-serif", fontSize: "0.75rem", margin: 0 }}>
+                      {errors.consent}
+                    </p>
                   )}
                 </div>
 
                 {/* Server error */}
                 {serverError && (
-                  <p style={{ color: "#c0392b", fontFamily: "'Work Sans', sans-serif", fontSize: "0.82rem", lineHeight: 1.5, padding: "10px 14px", borderRadius: 10, backgroundColor: "rgba(192,57,43,0.08)", margin: 0 }}>
+                  <p style={{
+                    color: "#c0392b",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.82rem",
+                    lineHeight: 1.5,
+                    padding: "10px 14px",
+                    borderRadius: 10,
+                    backgroundColor: "rgba(192,57,43,0.08)",
+                    margin: 0,
+                  }}>
                     {serverError}
                   </p>
                 )}
 
-                {/* Submit button */}
+                {/* Submit */}
                 <button
                   onClick={handleSubmit}
                   disabled={loading}
                   style={{
-                    width: "100%", padding: "14px", borderRadius: 999,
+                    width: "100%",
+                    padding: "14px",
+                    borderRadius: 999,
                     backgroundColor: loading ? "rgba(46,79,33,0.6)" : "#2E4F21",
                     color: "#A0F1BD",
-                    fontFamily: "'Work Sans', sans-serif", fontSize: "1rem", fontWeight: 600,
-                    border: "none", cursor: loading ? "not-allowed" : "pointer",
-                    display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
-                    transition: "background-color 0.2s, transform 0.15s",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "1rem",
+                    fontWeight: 600,
+                    border: "none",
+                    cursor: loading ? "not-allowed" : "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 8,
+                    transition: "background-color 0.2s, opacity 0.2s",
                     letterSpacing: "0.02em",
                   }}
                   onMouseEnter={(e) => { if (!loading) (e.currentTarget as HTMLButtonElement).style.opacity = "0.88"; }}
@@ -612,7 +743,11 @@ export default function BuySection() {
           <div
             ref={headingRef}
             className="flex flex-col items-center gap-3 text-center"
-            style={{ opacity: headingVisible ? 1 : 0, transform: headingVisible ? "translateY(0)" : "translateY(32px)", transition: "opacity 0.7s ease, transform 0.7s ease" }}
+            style={{
+              opacity: headingVisible ? 1 : 0,
+              transform: headingVisible ? "translateY(0)" : "translateY(32px)",
+              transition: "opacity 0.7s ease, transform 0.7s ease",
+            }}
           >
             <h2 style={{ color: "#2E4F21", fontFamily: "'Work Sans', sans-serif", fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
               Buy From Us
@@ -627,7 +762,11 @@ export default function BuySection() {
           <div
             ref={tabRef}
             className="flex flex-wrap justify-center gap-3"
-            style={{ opacity: tabVisible ? 1 : 0, transform: tabVisible ? "translateY(0)" : "translateY(20px)", transition: "opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s" }}
+            style={{
+              opacity: tabVisible ? 1 : 0,
+              transform: tabVisible ? "translateY(0)" : "translateY(20px)",
+              transition: "opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s",
+            }}
           >
             {categories.map((cat, i) => (
               <button
