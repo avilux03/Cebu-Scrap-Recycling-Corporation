@@ -24,7 +24,7 @@ const contactColumns = [
   {
     title: "Address",
     lines: [
-      { text: "Pitalo, San Fernando, Cebu, Philippines", href: null, icon: null },
+      { text: "Pitalo, San Fernando, 6018 Cebu, Philippines", href: null, icon: null },
     ],
   },
   {
@@ -47,11 +47,10 @@ const contactColumns = [
 ];
 
 const location = {
-  label: "Pitalo, San Fernando, Cebu, Philippines",
+  label: "Pitalo, San Fernando,  Cebu, Philippines",
   embedSrc:
-    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8!2d123.7172561!3d10.1751761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1715000000000",
-  mapsLink:
-    "https://www.google.com/maps/place/Cebu+Scrap+Recycling+Corporation/@10.1751761,123.7172561,17z",
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d981.7668651972191!2d123.71918726948779!3d10.175172119383886!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1779684204094!5m2!1sen!2sph",
+  mapsLink: "https://maps.app.goo.gl/GXWLMgVudn1q6zHz5",
 };
 
 function FacebookIcon() {
