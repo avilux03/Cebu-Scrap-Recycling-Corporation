@@ -9,7 +9,7 @@ export const contactSchema = yup.object({
   address: yup.string().trim().required("Address is required"),
   inquiryType: yup
     .string()
-    .oneOf(["sell", "buy"], "Please select an inquiry type")
+    .oneOf(["sell", "buy", "services", "others"], "Please select an inquiry type")
     .required("Please select an inquiry type"),
   message: yup.string().trim().required("Message is required"),
   imageUrl: yup.string().url().nullable().optional(),

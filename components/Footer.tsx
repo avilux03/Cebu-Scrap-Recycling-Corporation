@@ -4,10 +4,12 @@ import Image from "next/image";
 import Link from "next/link";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
-  { label: "Services", href: "#services" },
-  { label: "Contact", href: "#contact" },
+   { label: "Home", href: "#home" },
+  { label: "About Us", href: "#about" },
+  { label: "Sell to Us", href: "#sell" },
+  { label: "Buy from Us", href: "#buy" },
+  { label: "Our Services", href: "#services" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 function FooterNavLink({ href, label }: { href: string; label: string }) {

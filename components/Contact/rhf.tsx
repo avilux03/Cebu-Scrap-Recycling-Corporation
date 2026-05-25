@@ -15,7 +15,7 @@ type ContactFormData = {
   email: string
   phoneNumber: string
   address: string
-  inquiryType: "sell" | "buy"
+  inquiryType: "sell" | "buy" | "services" | "others"
   message: string
   imageUrl?: string | null
   consent: boolean
@@ -314,6 +314,8 @@ export default function ContactFormRHF(): React.ReactElement {
               <option value="" style={{ backgroundColor: "#2E4F21" }}>Select an option...</option>
               <option value="sell" style={{ backgroundColor: "#2E4F21" }}>Sell to you (I have scrap)</option>
               <option value="buy" style={{ backgroundColor: "#2E4F21" }}>Buy from you (I need materials)</option>
+              <option value="services" style={{ backgroundColor: "#2E4F21" }}>Avail your Services</option>
+              <option value="others" style={{ backgroundColor: "#2E4F21" }}>Others</option>
             </select>
             {errors.inquiryType && <p style={errorStyle}>{errors.inquiryType.message}</p>}
           </div>
@@ -363,7 +365,7 @@ export default function ContactFormRHF(): React.ReactElement {
 
           {/* Address */}
           <div className="flex flex-col gap-1.5">
-            <label style={labelStyle}>Pickup / Home Address</label>
+            <label style={labelStyle}>Address</label>
             <input
               {...register("address")}
               type="text"

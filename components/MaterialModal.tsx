@@ -11,7 +11,6 @@ export type ModalItem = {
 
 export type ModalContent = {
   title: string;
-  emoji: string;
   definition: string;
   items: ModalItem[];
 };
@@ -19,7 +18,6 @@ export type ModalContent = {
 export const modalData: Record<string, ModalContent> = {
   "Ferrous Metals": {
     title: "Ferrous Metals",
-    emoji: "🔧",
     definition:
       "We buy all kinds of ferrous metals — from old steel beams and iron pipes to cast iron cookware, stainless steel scraps, and used tin cans. Ferrous metals are iron-based, magnetic, and among the most recycled materials in the world. Turn your rust and metal junk into cash with us.",
     items: [
@@ -57,7 +55,6 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Non-Ferrous Metals": {
     title: "Non-Ferrous Metals",
-    emoji: "🟡",
     definition:
       "We purchase all non-ferrous metals including copper wiring, brass fittings, bronze parts, aluminum scraps, tin, and zinc. These metals are free of iron, making them rust-resistant and highly valuable in the recycling market. Bring them in and get top peso for every kilo.",
     items: [
@@ -101,7 +98,6 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Vehicles & Parts": {
     title: "Vehicles & Parts",
-    emoji: "🚗",
     definition:
       "We buy old, damaged, or non-running vehicles and their parts — engines, transmissions, radiators, alternators, and batteries. Whether it's a whole unit or individual components, we assess and pay for it all. Don't let your old vehicle sit and rust — sell it to us.",
     items: [
@@ -133,7 +129,6 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Machinery & Equipment": {
     title: "Machinery & Equipment",
-    emoji: "⚙️",
     definition:
       "We accept and purchase all types of industrial machinery and heavy equipment — generators, pumps, compressors, motors, and more. Decommissioned or broken, we'll buy it regardless of condition. No machine is too big or too worn down for us.",
     items: [
@@ -147,7 +142,6 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Home & Office Appliances": {
     title: "Home & Office Appliances",
-    emoji: "📺",
     definition:
       "We buy used, broken, or outdated home and office appliances — TVs, refrigerators, aircons, computers, and more. Instead of throwing them out, sell them to us for responsible recycling and fair payment. We make it easy to clear out your space and earn from it.",
     items: [
@@ -173,7 +167,6 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Plastics & Cartons": {
     title: "Plastics & Cartons",
-    emoji: "♻️",
     definition:
       "We buy recyclable plastics and cartons — PET bottles, HDPE containers, cardboard boxes, corrugated cartons, and industrial plastic scraps. Whether from your home, office, or warehouse, we take them in bulk or small loads. Help the environment and earn from your waste at the same time.",
     items: [
@@ -201,7 +194,6 @@ type Props = {
 export default function MaterialModal({ materialKey, onClose }: Props) {
   const content = materialKey ? modalData[materialKey] : null;
 
-  // Lock body scroll when modal is open
   useEffect(() => {
     if (content) {
       document.body.style.overflow = "hidden";
@@ -213,7 +205,6 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
     };
   }, [content]);
 
-  // Close on Escape key
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
@@ -232,7 +223,7 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
         className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
         style={{ backgroundColor: "rgba(10, 25, 10, 0.72)", backdropFilter: "blur(4px)" }}
       >
-        {/* Modal Panel — stop propagation so clicking inside doesn't close */}
+        {/* Modal Panel */}
         <div
           onClick={(e) => e.stopPropagation()}
           className="relative w-full md:w-auto md:max-w-2xl flex flex-col rounded-t-3xl md:rounded-3xl overflow-hidden"
@@ -247,20 +238,17 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
             className="flex items-center justify-between px-6 py-5 shrink-0"
             style={{ backgroundColor: "#2E4F21" }}
           >
-            <div className="flex items-center gap-3">
-              <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>{content.emoji}</span>
-              <h2
-                style={{
-                  color: "#A0F1BD",
-                  fontFamily: "'Work Sans', sans-serif",
-                  fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
-                  fontWeight: "700",
-                  letterSpacing: "-0.01em",
-                }}
-              >
-                {content.title}
-              </h2>
-            </div>
+            <h2
+              style={{
+                color: "#A0F1BD",
+                fontFamily: "'Work Sans', sans-serif",
+                fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
+                fontWeight: "700",
+                letterSpacing: "-0.01em",
+              }}
+            >
+              {content.title}
+            </h2>
             <button
               onClick={onClose}
               className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
@@ -329,13 +317,8 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
                     <img
                       src={item.image}
                       alt={item.label}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
                       onError={(e) => {
-                        // Fallback if image not found
                         (e.currentTarget as HTMLImageElement).style.display = "none";
                       }}
                     />

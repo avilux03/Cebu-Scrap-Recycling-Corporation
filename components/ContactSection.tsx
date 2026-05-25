@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 function useInView(threshold = 0.08) {
   const ref = useRef<HTMLDivElement>(null);
@@ -22,19 +22,18 @@ function useInView(threshold = 0.08) {
 
 const contactColumns = [
   {
-    emoji: "📞",
-    title: "Phone & Email",
-    lines: [
-      { text: "0948 055 8001", href: "tel:09629305439" },
-      { text: "contact@cebuscrap.com", href: "mailto:contact@cebuscrap.com" },
-    ],
-  },
-  {
     emoji: "📍",
     title: "Address",
     lines: [
-      { text: "Pitalo, San Fernando Cebu (Main)", href: null },
-      { text: "Mag-abo, Amlan, Negros Oriental", href: null },
+      { text: "Pitalo, San Fernando, Cebu, Philippines", href: null, icon: null },
+    ],
+  },
+  {
+    emoji: "📞",
+    title: "Phone & Email",
+    lines: [
+      { text: "0948 055 8001", href: "tel:09629305439", icon: null },
+      { text: "contact@cebuscrap.com", href: "mailto:contact@cebuscrap.com", icon: null },
     ],
   },
   {
@@ -42,29 +41,35 @@ const contactColumns = [
     title: "Social Media Pages",
     lines: [
       {
-        text: "Facebook: Cebu Scrap Recycling Corporation",
+        text: "Cebu Scrap Recycling Corporation",
         href: "https://web.facebook.com/profile.php?id=61576023680563",
+        icon: "facebook",
       },
     ],
   },
 ];
 
-const locations = [
-  {
-    label: "Pitalo, San Fernando Cebu (Main)",
-    embedSrc:
-      "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8!2d123.7172561!3d10.1751761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1715000000000",
-    mapsLink:
-      "https://www.google.com/maps/place/Cebu+Scrap+Recycling+Corporation/@10.1751761,123.7172561,17z",
-  },
-  {
-    label: "Mag-abo, Amlan, Negros Oriental",
-    embedSrc:
-      "https://www.google.com/maps/embed?pb=!4v1715000000001!6m8!1m7!1sXTGAnCrXVngdjLLJR9_u9A!2m2!1d9.4662391!2d123.2170532!3f105.33!4f-1.74!5f0.7820865974627469",
-    mapsLink:
-      "https://www.google.com/maps/@9.4662391,123.2170532,3a,75y,105.33h,91.74t/data=!3m7!1e1!3m5!1sXTGAnCrXVngdjLLJR9_u9A!2e0!6shttps:%2F%2Fstreetviewpixels-pa.googleapis.com%2Fv1%2Fthumbnail%3Fcb_client%3Dmaps_sv.tactile%26w%3D900%26h%3D600%26pitch%3D-1.7382077888765508%26panoid%3DXTGAnCrXVngdjLLJR9_u9A%26yaw%3D105.3275944068205!7i16384!8i8192",
-  },
-];
+const location = {
+  label: "Pitalo, San Fernando, Cebu, Philippines",
+  embedSrc:
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3925.8!2d123.7172561!3d10.1751761!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x33a979040a44e1d1%3A0x4ffbe150b6baa434!2sCebu%20Scrap%20Recycling%20Corporation!5e0!3m2!1sen!2sph!4v1715000000000",
+  mapsLink:
+    "https://www.google.com/maps/place/Cebu+Scrap+Recycling+Corporation/@10.1751761,123.7172561,17z",
+};
+
+function FacebookIcon() {
+  return (
+    <svg
+      width="15"
+      height="15"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      style={{ flexShrink: 0 }}
+    >
+      <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
+    </svg>
+  );
+}
 
 export default function ContactSection() {
   const { ref: headingRef, inView: headingVisible } = useInView(0.3);
@@ -74,39 +79,6 @@ export default function ContactSection() {
   return (
     <>
       <style>{`
-        .contact-columns-grid {
-          display: grid;
-          grid-template-columns: 1fr 1px 1fr 1px 1fr;
-        }
-
-        .contact-col-separator {
-          display: block;
-          width: 1px;
-          background-color: rgba(46, 79, 33, 0.25);
-        }
-
-        .contact-col-pad-first  { padding: 0 2rem 0 0; }
-        .contact-col-pad-middle { padding: 0 2rem; }
-        .contact-col-pad-last   { padding: 0 0 0 2rem; }
-
-        @media (max-width: 640px) {
-          .contact-columns-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .contact-col-separator {
-            display: block;
-            width: 100%;
-            height: 1px;
-          }
-
-          .contact-col-pad-first,
-          .contact-col-pad-middle,
-          .contact-col-pad-last {
-            padding: 0;
-          }
-        }
-
         .map-card {
           position: relative;
           width: 100%;
@@ -158,6 +130,42 @@ export default function ContactSection() {
         .map-card:hover .map-card-overlay-label {
           opacity: 1;
         }
+
+        /* Two-column layout on desktop */
+        .contact-main-grid {
+          display: grid;
+          grid-template-columns: 1fr 1px 1fr;
+          gap: 0;
+          align-items: start;
+        }
+
+        .contact-left { padding: 0 2rem 0 0; }
+        .contact-right { padding: 0 0 0 2rem; }
+
+        .contact-separator {
+          display: block;
+          width: 1px;
+          align-self: stretch;
+          background-color: rgba(46, 79, 33, 0.25);
+        }
+
+        /* Single-column stacked on mobile */
+        @media (max-width: 640px) {
+          .contact-main-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .contact-separator {
+            width: 100%;
+            height: 1px;
+            align-self: auto;
+          }
+
+          .contact-left,
+          .contact-right {
+            padding: 0;
+          }
+        }
       `}</style>
 
       <section
@@ -190,50 +198,114 @@ export default function ContactSection() {
             >
               Contact Us
             </h2>
-
             <div
               className="rounded-full"
-              style={{
-                width: "60px",
-                height: "4px",
-                backgroundColor: "#2E4F21",
-              }}
+              style={{ width: "60px", height: "4px", backgroundColor: "#2E4F21" }}
             />
           </div>
 
-          {/* Contact Columns */}
+          {/* Main grid */}
           <div
             ref={columnsRef}
-            className="contact-columns-grid"
+            className="contact-main-grid"
             style={{
               opacity: columnsVisible ? 1 : 0,
               transform: columnsVisible ? "translateY(0)" : "translateY(28px)",
               transition: "opacity 0.7s ease 0.1s, transform 0.7s ease 0.1s",
-              gap: "0",
             }}
           >
-            {contactColumns.map((col, i) => (
-              <Fragment key={col.title}>
-                <div
-                  className={
-                    i === 0
-                      ? "contact-col-pad-first"
-                      : i === contactColumns.length - 1
-                      ? "contact-col-pad-last"
-                      : "contact-col-pad-middle"
-                  }
+            {/* LEFT: Address + Map */}
+            <div
+              className="contact-left"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "1rem",
+                paddingTop: "1rem",
+                paddingBottom: "1rem",
+              }}
+            >
+              {/* Address block */}
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <span style={{ fontSize: "1.8rem", lineHeight: 1, marginBottom: "0.25rem" }}>
+                  {contactColumns[0].emoji}
+                </span>
+                <h3
                   style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "0.5rem",
-                    paddingTop: "1rem",
-                    paddingBottom: "1rem",
+                    color: "#2E4F21",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "clamp(0.95rem, 2.5vw, 1.05rem)",
+                    fontWeight: "700",
+                    letterSpacing: "-0.01em",
+                    margin: 0,
                   }}
                 >
+                  {contactColumns[0].title}
+                </h3>
+                {contactColumns[0].lines.map((line) => (
+                  <span
+                    key={line.text}
+                    style={{
+                      color: "rgba(46,79,33,0.65)",
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
+                      fontWeight: "400",
+                      lineHeight: "1.7",
+                    }}
+                  >
+                    {line.text}
+                  </span>
+                ))}
+              </div>
+
+              {/* Map below address */}
+              <div
+                ref={locationRef}
+                style={{
+                  opacity: locationVisible ? 1 : 0,
+                  transform: locationVisible ? "translateY(0)" : "translateY(32px)",
+                  transition: "opacity 0.7s ease, transform 0.7s ease",
+                }}
+              >
+                <a
+                  href={location.mapsLink}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="map-card"
+                >
+                  <iframe
+                    src={location.embedSrc}
+                    allowFullScreen
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title={location.label}
+                  />
+                  <div className="map-card-overlay">
+                    <span className="map-card-overlay-label">Open in Google Maps ↗</span>
+                  </div>
+                </a>
+              </div>
+            </div>
+
+            {/* Separator */}
+            <div className="contact-separator" />
+
+            {/* RIGHT: Phone & Email + Social Media */}
+            <div
+              className="contact-right"
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                gap: "2rem",
+                paddingTop: "1rem",
+                paddingBottom: "1rem",
+              }}
+            >
+              {[contactColumns[1], contactColumns[2]].map((col) => (
+                <div key={col.title} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                   <span style={{ fontSize: "1.8rem", lineHeight: 1, marginBottom: "0.25rem" }}>
                     {col.emoji}
                   </span>
-
                   <h3
                     style={{
                       color: "#2E4F21",
@@ -246,7 +318,6 @@ export default function ContactSection() {
                   >
                     {col.title}
                   </h3>
-
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
                     {col.lines.map((line) =>
                       line.href ? (
@@ -263,8 +334,12 @@ export default function ContactSection() {
                             lineHeight: "1.7",
                             textDecoration: "underline",
                             textUnderlineOffset: "3px",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "6px",
                           }}
                         >
+                          {line.icon === "facebook" && <FacebookIcon />}
                           {line.text}
                         </a>
                       ) : (
@@ -283,72 +358,6 @@ export default function ContactSection() {
                       )
                     )}
                   </div>
-                </div>
-
-                {i < contactColumns.length - 1 && (
-                  <div className="contact-col-separator" />
-                )}
-              </Fragment>
-            ))}
-          </div>
-
-          {/* Locations */}
-          <div
-            ref={locationRef}
-            className="flex flex-col gap-6 md:gap-8"
-            style={{
-              opacity: locationVisible ? 1 : 0,
-              transform: locationVisible ? "translateY(0)" : "translateY(32px)",
-              transition: "opacity 0.7s ease, transform 0.7s ease",
-            }}
-          >
-            <h3
-              className="text-center"
-              style={{
-                color: "#2E4F21",
-                fontFamily: "'Work Sans', sans-serif",
-                fontSize: "clamp(1.4rem, 5vw, 2.2rem)",
-                fontWeight: "700",
-                letterSpacing: "-0.02em",
-                margin: 0,
-              }}
-            >
-              Locations
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
-              {locations.map((loc) => (
-                <div key={loc.label} className="flex flex-col gap-3">
-                  <p
-                    className="text-center"
-                    style={{
-                      color: "#2E4F21",
-                      fontFamily: "'Work Sans', sans-serif",
-                      fontSize: "clamp(0.82rem, 2.5vw, 0.92rem)",
-                      fontWeight: "700",
-                      margin: 0,
-                    }}
-                  >
-                    {loc.label}
-                  </p>
-
-                  <a
-                    href={loc.mapsLink}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="map-card"
-                  >
-                    <iframe
-                      src={loc.embedSrc}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title={loc.label}
-                    />
-                    <div className="map-card-overlay">
-                      <span className="map-card-overlay-label">Open in Google Maps ↗</span>
-                    </div>
-                  </a>
                 </div>
               ))}
             </div>

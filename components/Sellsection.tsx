@@ -7,34 +7,31 @@ import MaterialModal from "@/components/MaterialModal";
 
 const materials = [
   {
-    emoji: "🔧",
     title: "Ferrous Metals",
     description: "Steel, Iron, Cast Iron, Stainless, and Cans",
   },
   {
-    emoji: "🟡",
     title: "Non-Ferrous Metals",
     description: "Copper, Brass, Bronze, Aluminum, Tin, and Zinc",
   },
   {
-    emoji: "🚗",
     title: "Vehicles & Parts",
-    description: "Engine, Transmission, Radiator, Alternator, Battery, etc.",
+    description:
+      "Engine, Transmission, Radiator, Alternator, Battery, etc.",
   },
   {
-    emoji: "⚙️",
     title: "Machinery & Equipment",
-    description: "Industrial machines, generators, pumps, compressors, motors, and heavy equipment parts.",
+    description:
+      "Industrial machines, generators, pumps, compressors, motors, and heavy equipment parts.",
   },
   {
-    emoji: "📺",
     title: "Home & Office Appliances",
     description: "TV, Refrigerator, Aircon, Computer, etc.",
   },
   {
-    emoji: "♻️",
     title: "Plastics & Cartons",
-    description: "PET bottles, HDPE containers, cardboard boxes, corrugated cartons, and industrial plastic scraps.",
+    description:
+      "PET bottles, HDPE containers, cardboard boxes, corrugated cartons, and industrial plastic scraps.",
   },
 ];
 
@@ -49,7 +46,9 @@ function useInView(threshold = 0.15) {
       ([entry]) => setInView(entry.isIntersecting),
       { threshold }
     );
+
     if (ref.current) observer.observe(ref.current);
+
     return () => observer.disconnect();
   }, [threshold]);
 
@@ -58,19 +57,19 @@ function useInView(threshold = 0.15) {
 
 // ─── MaterialCard ─────────────────────────────────────────────────────────────
 
-function MaterialCard({
-  emoji,
-  title,
-  description,
-  index,
-  onClick,
-}: {
-  emoji: string;
+type MaterialCardProps = {
   title: string;
   description: string;
   index: number;
   onClick: () => void;
-}) {
+};
+
+function MaterialCard({
+  title,
+  description,
+  index,
+  onClick,
+}: MaterialCardProps) {
   const { ref, inView } = useInView(0.1);
   const [hovered, setHovered] = useState(false);
 
@@ -92,31 +91,15 @@ function MaterialCard({
             ? "translateY(-6px) scale(1.02)"
             : "translateY(0) scale(1)"
           : "translateY(36px) scale(0.97)",
-        transition: `opacity 0.6s ease ${index * 80}ms, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease`,
+        transition: `opacity 0.6s ease ${
+          index * 80
+        }ms, transform 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease`,
         boxShadow: hovered
           ? "0 16px 40px rgba(46,79,33,0.25)"
           : "0 4px 20px rgba(46,79,33,0.08)",
         cursor: "pointer",
       }}
     >
-      {/* Emoji Icon */}
-      <div
-        className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0"
-        style={{
-          backgroundColor: hovered
-            ? "rgba(255,255,255,0.1)"
-            : "rgba(46,79,33,0.06)",
-          boxShadow: hovered
-            ? "0 4px 16px rgba(255,255,255,0.08)"
-            : "0 2px 8px rgba(46,79,33,0.10)",
-          transition: "all 0.3s ease",
-          fontSize: "1.8rem",
-          lineHeight: 1,
-        }}
-      >
-        {emoji}
-      </div>
-
       {/* Text */}
       <div className="flex flex-col gap-2 flex-1">
         <h3
@@ -131,9 +114,12 @@ function MaterialCard({
         >
           {title}
         </h3>
+
         <p
           style={{
-            color: hovered ? "rgba(255,255,255,0.7)" : "rgba(46,79,33,0.6)",
+            color: hovered
+              ? "rgba(255,255,255,0.7)"
+              : "rgba(46,79,33,0.6)",
             fontFamily: "'Work Sans', sans-serif",
             fontSize: "0.9rem",
             fontWeight: "400",
@@ -149,7 +135,9 @@ function MaterialCard({
       <div
         className="flex items-center mt-1"
         style={{
-          color: hovered ? "rgba(255,255,255,0.9)" : "rgba(46,79,33,0.4)",
+          color: hovered
+            ? "rgba(255,255,255,0.9)"
+            : "rgba(46,79,33,0.4)",
           fontFamily: "'Work Sans', sans-serif",
           fontSize: "0.8rem",
           fontWeight: "600",
@@ -160,6 +148,7 @@ function MaterialCard({
         }}
       >
         Learn more
+
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
           <path
             d="M2 7h10M8 3l4 4-4 4"
@@ -178,6 +167,7 @@ function MaterialCard({
 
 export default function SellSection() {
   const { ref: headingRef, inView: headingVisible } = useInView(0.3);
+
   const [activeModal, setActiveModal] = useState<string | null>(null);
 
   return (
@@ -196,7 +186,9 @@ export default function SellSection() {
             className="flex flex-col items-center gap-3 text-center"
             style={{
               opacity: headingVisible ? 1 : 0,
-              transform: headingVisible ? "translateY(0)" : "translateY(32px)",
+              transform: headingVisible
+                ? "translateY(0)"
+                : "translateY(32px)",
               transition: "opacity 0.7s ease, transform 0.7s ease",
             }}
           >
@@ -211,6 +203,7 @@ export default function SellSection() {
             >
               Sell To Us
             </h2>
+
             <div
               className="rounded-full"
               style={{
@@ -219,6 +212,7 @@ export default function SellSection() {
                 backgroundColor: "#2E4F21",
               }}
             />
+
             <p
               style={{
                 color: "rgba(46,79,33,0.65)",
@@ -229,8 +223,8 @@ export default function SellSection() {
                 lineHeight: "1.7",
               }}
             >
-              We accept a wide range of recyclable materials. Get the best value
-              for your scrap.
+              We accept a wide range of recyclable materials. Get the
+              best value for your scrap.
             </p>
           </div>
 

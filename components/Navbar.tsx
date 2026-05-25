@@ -7,11 +7,11 @@ import { useState, useEffect } from "react";
 
 const navLinks = [
   { label: "Home", href: "#home" },
-  { label: "About", href: "#about" },
+  { label: "About Us", href: "#about" },
   { label: "Sell to Us", href: "#sell" },
   { label: "Buy from Us", href: "#buy" },
   { label: "Our Services", href: "#services" },
-  { label: "Our Contact", href: "#contact" },
+  { label: "Contact Us", href: "#contact" },
 ];
 
 function NavLink({
@@ -100,26 +100,25 @@ export default function Navbar() {
           style={{ maxWidth: "100%", paddingLeft: "40px" }}
         >
           {/* Logo — left side with padding */}
-<Link
-  href="/"
-  style={{
-    display: "flex",
-    alignItems: "center",
-    flexShrink: 0,
-    paddingLeft: "35px",
-  }}
->
-  <Image
-    src="/logo.png"
-    alt="Cebu Scrap Recycling Corporation"
-    width={80}
-    height={40}
-    className="object-contain"
-    style={{ display: "block" }}
-    priority
-  />
-</Link>
-        
+          <Link
+            href="/"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexShrink: 0,
+              paddingLeft: "35px",
+            }}
+          >
+            <Image
+              src="/logo.png"
+              alt="Cebu Scrap Recycling Corporation"
+              width={80}
+              height={40}
+              className="object-contain"
+              style={{ display: "block" }}
+              priority
+            />
+          </Link>
 
           {/* Desktop Nav — right side, all on one line */}
           <div className="hidden md:flex items-center self-stretch" style={{ flexShrink: 0 }}>
@@ -131,46 +130,6 @@ export default function Navbar() {
                 pathname={pathname}
               />
             ))}
-
-            <div style={{ display: "flex", alignItems: "center", paddingLeft: "12px", paddingRight: "16px" }}>
-              <Link href="/#contact-form" style={{ textDecoration: "none" }}>
-                <button
-                  style={{
-                    background: "linear-gradient(135deg, #2E4F21, #3d6b2c)",
-                    color: "#ffffff",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "14px",
-                    fontWeight: "600",
-                    border: "1px solid rgba(255,255,255,0.08)",
-                    cursor: "pointer",
-                    padding: "10px 24px",
-                    borderRadius: "999px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    letterSpacing: "0.03em",
-                    whiteSpace: "nowrap",
-                    transition: "all 0.25s ease",
-                    boxShadow: "0 4px 14px rgba(46,79,33,0.25)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-2px)";
-                    e.currentTarget.style.boxShadow = "0 8px 20px rgba(46,79,33,0.35)";
-                    e.currentTarget.style.background = "linear-gradient(135deg, #3d6b2c, #4a7d36)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 4px 14px rgba(46,79,33,0.25)";
-                    e.currentTarget.style.background = "linear-gradient(135deg, #2E4F21, #3d6b2c)";
-                  }}
-                >
-                  <span>Message Us!</span>
-                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
-                    <path d="M2 8h10M8 4l4 4-4 4" stroke="#ffffff" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </button>
-              </Link>
-            </div>
           </div>
 
           {/* Hamburger — mobile only */}
@@ -217,49 +176,6 @@ export default function Navbar() {
                 onClick={() => setMenuOpen(false)}
               />
             ))}
-
-            <Link href="/#contact-form" style={{ textDecoration: "none" }}>
-              <button
-                style={{
-                  background: "linear-gradient(135deg, #2E4F21, #3d6b2c)",
-                  color: "#ffffff",
-                  fontFamily: "'Work Sans', sans-serif",
-                  fontSize: "13px",
-                  fontWeight: "600",
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  cursor: "pointer",
-                  padding: "12px 22px",
-                  borderRadius: "999px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "10px",
-                  letterSpacing: "0.04em",
-                  transition: "all 0.25s ease",
-                  boxShadow: "0 6px 18px rgba(46,79,33,0.25)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow = "0 10px 24px rgba(46,79,33,0.35)";
-                  e.currentTarget.style.background = "linear-gradient(135deg, #3d6b2c, #4a7d36)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 6px 18px rgba(46,79,33,0.25)";
-                  e.currentTarget.style.background = "linear-gradient(135deg, #2E4F21, #3d6b2c)";
-                }}
-              >
-                <span>Message Us</span>
-                <svg width="15" height="15" viewBox="0 0 16 16" fill="none">
-                  <path
-                    d="M2 8h10M8 4l4 4-4 4"
-                    stroke="#ffffff"
-                    strokeWidth="1.8"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </button>
-            </Link>
           </div>
         </div>
       </nav>
