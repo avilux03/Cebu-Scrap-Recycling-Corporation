@@ -22,22 +22,19 @@ function useInView(threshold = 0.08) {
 
 const contactColumns = [
   {
-    emoji: "📍",
     title: "Address",
     lines: [
       { text: "Pitalo, San Fernando, Cebu, Philippines", href: null, icon: null },
     ],
   },
   {
-    emoji: "📞",
     title: "Phone & Email",
     lines: [
-      { text: "0948 055 8001", href: "tel:09629305439", icon: null },
+      { text: "0948 055 8001", href: "tel:09480558001", icon: null },
       { text: "contact@cebuscrap.com", href: "mailto:contact@cebuscrap.com", icon: null },
     ],
   },
   {
-    emoji: "📘",
     title: "Social Media Pages",
     lines: [
       {
@@ -166,6 +163,24 @@ export default function ContactSection() {
             padding: 0;
           }
         }
+
+        .contact-link {
+          color: rgba(46,79,33,0.65);
+          font-family: 'Work Sans', sans-serif;
+          font-weight: 400;
+          line-height: 1.7;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          transition: color 0.2s ease;
+          cursor: pointer;
+        }
+
+        .contact-link:hover {
+          color: #2E4F21;
+        }
       `}</style>
 
       <section
@@ -227,9 +242,6 @@ export default function ContactSection() {
             >
               {/* Address block */}
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                <span style={{ fontSize: "1.8rem", lineHeight: 1, marginBottom: "0.25rem" }}>
-                  {contactColumns[0].emoji}
-                </span>
                 <h3
                   style={{
                     color: "#2E4F21",
@@ -303,9 +315,6 @@ export default function ContactSection() {
             >
               {[contactColumns[1], contactColumns[2]].map((col) => (
                 <div key={col.title} style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "1.8rem", lineHeight: 1, marginBottom: "0.25rem" }}>
-                    {col.emoji}
-                  </span>
                   <h3
                     style={{
                       color: "#2E4F21",
@@ -326,17 +335,9 @@ export default function ContactSection() {
                           href={line.href}
                           target={line.href.startsWith("http") ? "_blank" : undefined}
                           rel="noreferrer"
+                          className="contact-link"
                           style={{
-                            color: "rgba(46,79,33,0.65)",
-                            fontFamily: "'Work Sans', sans-serif",
                             fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
-                            fontWeight: "400",
-                            lineHeight: "1.7",
-                            textDecoration: "underline",
-                            textUnderlineOffset: "3px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
                           }}
                         >
                           {line.icon === "facebook" && <FacebookIcon />}
