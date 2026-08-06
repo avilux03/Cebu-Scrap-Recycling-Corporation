@@ -71,7 +71,7 @@ function AboutCard({
         className="relative overflow-hidden rounded-2xl md:rounded-3xl p-8 md:p-14 flex flex-col md:flex-row gap-8 md:gap-16 items-start"
         style={{
           backgroundColor: "#2E4F21",
-          border: "1px solid rgba(160,241,189,0.15)",
+          border: "1px solid rgba(255,255,255,0.15)",
         }}
       >
         {/* Large background number */}
@@ -81,7 +81,7 @@ function AboutCard({
             fontSize: "clamp(8rem, 20vw, 18rem)",
             fontWeight: "900",
             lineHeight: "1",
-            color: "rgba(160,241,189,0.06)",
+            color: "rgba(255,255,255,0.06)",
             fontFamily: "'Work Sans', sans-serif",
             right: "-1rem",
             bottom: "-2rem",
@@ -98,7 +98,7 @@ function AboutCard({
               fontFamily: "'Work Sans', sans-serif",
               fontSize: "clamp(2.5rem, 5vw, 4rem)",
               fontWeight: "800",
-              color: "#A0F1BD",
+              color: "#FFFFFF",
               lineHeight: "1",
               letterSpacing: "-0.03em",
             }}
@@ -108,8 +108,8 @@ function AboutCard({
           <span
             className="px-3 py-1 rounded-full text-xs font-semibold tracking-widest uppercase"
             style={{
-              backgroundColor: "rgba(160,241,189,0.12)",
-              color: "#A0F1BD",
+              backgroundColor: "rgba(255,255,255,0.12)",
+              color: "#FFFFFF",
               fontFamily: "'Work Sans', sans-serif",
               letterSpacing: "0.12em",
             }}
@@ -124,7 +124,7 @@ function AboutCard({
           style={{
             width: "1px",
             alignSelf: "stretch",
-            backgroundColor: "rgba(160,241,189,0.15)",
+            backgroundColor: "rgba(255,255,255,0.15)",
           }}
         />
 
@@ -138,7 +138,7 @@ function AboutCard({
               fontWeight: "600",
               letterSpacing: "0.18em",
               textTransform: "uppercase",
-              color: "rgba(160,241,189,0.5)",
+              color: "rgba(255,255,255,0.5)",
             }}
           >
             {title}
@@ -165,7 +165,7 @@ function AboutCard({
               width: "48px",
               height: "3px",
               borderRadius: "99px",
-              backgroundColor: "#A0F1BD",
+              backgroundColor: "#FFFFFF",
             }}
           />
 

@@ -20,7 +20,18 @@ function useInView(threshold = 0.08) {
   return { ref, inView };
 }
 
-const contactColumns = [
+type ContactLine = {
+  text: string;
+  href: string | null;
+  icon: string | null;
+};
+
+type ContactColumn = {
+  title: string;
+  lines: ContactLine[];
+};
+
+const contactColumns: ContactColumn[] = [
   {
     title: "Address",
     lines: [
@@ -31,7 +42,7 @@ const contactColumns = [
     title: "Phone & Email",
     lines: [
       { text: "0948 055 8001", href: "tel:09480558001", icon: null },
-      { text: "contact@cebuscrap.com", href: "mailto:contact@cebuscrap.com", icon: null },
+      { text: "contact@cebuscrap.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=contact@cebuscrap.com", icon: null },
     ],
   },
   {
@@ -64,6 +75,37 @@ function FacebookIcon() {
     >
       <path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.491 0-1.956.93-1.956 1.884v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z" />
     </svg>
+  );
+}
+
+function ContactLineItem({ line }: { line: ContactLine }) {
+  if (line.href) {
+    return (
+      <a
+        href={line.href}
+        target={line.href.startsWith("http") ? "_blank" : undefined}
+        rel="noreferrer"
+        className="contact-link"
+        style={{ fontSize: "clamp(0.78rem, 2vw, 0.9rem)" }}
+      >
+        {line.icon === "facebook" && <FacebookIcon />}
+        {line.text}
+      </a>
+    );
+  }
+
+  return (
+    <span
+      style={{
+        color: "rgba(46,79,33,0.65)",
+        fontFamily: "'Work Sans', sans-serif",
+        fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
+        fontWeight: "400",
+        lineHeight: "1.7",
+      }}
+    >
+      {line.text}
+    </span>
   );
 }
 
@@ -327,36 +369,9 @@ export default function ContactSection() {
                     {col.title}
                   </h3>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                    {col.lines.map((line) =>
-                      line.href ? (
-                        <a
-                          key={line.text}
-                          href={line.href}
-                          target={line.href.startsWith("http") ? "_blank" : undefined}
-                          rel="noreferrer"
-                          className="contact-link"
-                          style={{
-                            fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
-                          }}
-                        >
-                          {line.icon === "facebook" && <FacebookIcon />}
-                          {line.text}
-                        </a>
-                      ) : (
-                        <span
-                          key={line.text}
-                          style={{
-                            color: "rgba(46,79,33,0.65)",
-                            fontFamily: "'Work Sans', sans-serif",
-                            fontSize: "clamp(0.78rem, 2vw, 0.9rem)",
-                            fontWeight: "400",
-                            lineHeight: "1.7",
-                          }}
-                        >
-                          {line.text}
-                        </span>
-                      )
-                    )}
+                    {col.lines.map((line) => (
+                      <ContactLineItem key={line.text} line={line} />
+                    ))}
                   </div>
                 </div>
               ))}

@@ -245,27 +245,6 @@ const catalog = [
       "We accept a range of recyclable plastics and paper-based packaging materials. Keeping plastics and cartons out of landfills is part of our commitment to a cleaner Philippines.",
     items: [
       {
-        slug: "pet-bottles",
-        label: "PET Bottles",
-        image: null,
-        description:
-          "PET (Polyethylene Terephthalate) bottles from beverages are among the most recycled plastics globally. We accept clean, baled PET bottles. Recycled PET is used to make new bottles, polyester fiber, and packaging materials.",
-      },
-      {
-        slug: "hdpe-containers",
-        label: "HDPE Containers",
-        image: null,
-        description:
-          "HDPE plastic is found in milk jugs, shampoo bottles, detergent containers, and industrial drums. It is one of the most durable and recyclable plastics. We accept clean HDPE in baled or loose form.",
-      },
-      {
-        slug: "cardboard",
-        label: "Cardboard",
-        image: null,
-        description:
-          "Corrugated cardboard from shipping boxes is highly recyclable and in constant demand. We accept large quantities of clean, dry cardboard — baled or flat. Cardboard is recycled into new paper products and packaging.",
-      },
-      {
         slug: "cartons",
         label: "Cartons",
         image: "/cartons.png",
@@ -380,115 +359,8 @@ export default function ProductPage() {
         <div className="mx-auto px-6 md:px-12 py-10" style={{ maxWidth: "1280px" }}>
           <div className="flex flex-col md:flex-row gap-8">
 
-            {/* ── LEFT SIDEBAR ── */}
-            <aside
-              className="w-full md:w-64 shrink-0 flex flex-col gap-2"
-              style={{ alignSelf: "flex-start", position: "sticky", top: "89px" }}
-            >
-              {catalog.map((cat) => {
-                const isActiveCat = cat.slug === activeCatSlug;
-                return (
-                  <div key={cat.slug}>
-                    <button
-                      onClick={() => handleCategoryChange(cat.slug)}
-                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-150"
-                      style={{
-                        backgroundColor: isActiveCat ? "#2E4F21" : "transparent",
-                        color: isActiveCat ? "#A0F1BD" : "rgba(46,79,33,0.75)",
-                        fontFamily: "'Work Sans', sans-serif",
-                        fontSize: "0.9rem",
-                        fontWeight: isActiveCat ? "700" : "500",
-                        border: "none",
-                        cursor: "pointer",
-                      }}
-                    >
-                      <span style={{ fontSize: "1.1rem" }}>{cat.emoji}</span>
-                      {cat.label}
-                    </button>
-
-                    {isActiveCat && (
-                      <div className="flex flex-col ml-4 mt-1 mb-2 gap-0.5">
-                        {cat.items.map((item) => {
-                          const isActiveItem = item.slug === activeItemSlug;
-                          return (
-                            <button
-                              key={item.slug}
-                              onClick={() => handleItemChange(item.slug)}
-                              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150"
-                              style={{
-                                backgroundColor: isActiveItem ? "rgba(160,241,189,0.35)" : "transparent",
-                                color: isActiveItem ? "#2E4F21" : "rgba(46,79,33,0.55)",
-                                fontFamily: "'Work Sans', sans-serif",
-                                fontSize: "0.83rem",
-                                fontWeight: isActiveItem ? "600" : "400",
-                                borderTop: "none",
-                                borderRight: "none",
-                                borderBottom: "none",
-                                borderLeft: isActiveItem ? "3px solid #2E4F21" : "3px solid transparent",
-                                cursor: "pointer",
-                              }}
-                            >
-                              {item.label}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-
-              {/* Sell CTA in sidebar */}
-              <div
-                className="mt-4 rounded-2xl p-5 flex flex-col gap-3"
-                style={{
-                  backgroundColor: "#2E4F21",
-                  border: "1px solid rgba(160,241,189,0.2)",
-                }}
-              >
-                <p
-                  style={{
-                    color: "#A0F1BD",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "0.85rem",
-                    fontWeight: "700",
-                    margin: 0,
-                  }}
-                >
-                  Ready to sell?
-                </p>
-                <p
-                  style={{
-                    color: "rgba(160,241,189,0.7)",
-                    fontFamily: "'Work Sans', sans-serif",
-                    fontSize: "0.78rem",
-                    lineHeight: "1.6",
-                    margin: 0,
-                  }}
-                >
-                  Get the best price for your scrap materials today.
-                </p>
-                <Link href="/#contact-form">
-                  <button
-                    className="w-full py-2 rounded-full transition-opacity hover:opacity-80"
-                    style={{
-                      backgroundColor: "#A0F1BD",
-                      color: "#2E4F21",
-                      fontFamily: "'Work Sans', sans-serif",
-                      fontSize: "0.82rem",
-                      fontWeight: "700",
-                      border: "none",
-                      cursor: "pointer",
-                    }}
-                  >
-                    Message Us!
-                  </button>
-                </Link>
-              </div>
-            </aside>
-
-            {/* ── MAIN CONTENT ── */}
-            <div className="flex-1 min-w-0">
+            {/* ── PRODUCT DETAIL — order 1 on mobile, right column on desktop ── */}
+            <div className="flex-1 min-w-0 order-1 md:order-2">
               <div
                 key={activeItem.slug}
                 className="rounded-3xl overflow-hidden"
@@ -599,57 +471,11 @@ export default function ProductPage() {
                     />
                   </div>
 
-                  <p
-                    style={{
-                      color: "rgba(46,79,33,0.75)",
-                      fontFamily: "'Work Sans', sans-serif",
-                      fontSize: "clamp(0.95rem, 1.6vw, 1.05rem)",
-                      lineHeight: "1.85",
-                      margin: 0,
-                    }}
-                  >
-                    {activeItem.description}
-                  </p>
 
-                  {/* Why Recycle callout */}
-                  <div
-                    className="rounded-2xl p-5 flex gap-4"
-                    style={{
-                      backgroundColor: "#f0fdf4",
-                      border: "1px solid rgba(160,241,189,0.5)",
-                    }}
-                  >
-                    <span style={{ fontSize: "1.5rem", flexShrink: 0 }}>♻️</span>
-                    <div>
-                      <p
-                        style={{
-                          color: "#2E4F21",
-                          fontFamily: "'Work Sans', sans-serif",
-                          fontSize: "0.85rem",
-                          fontWeight: "700",
-                          margin: "0 0 4px 0",
-                        }}
-                      >
-                        Why recycle with us?
-                      </p>
-                      <p
-                        style={{
-                          color: "rgba(46,79,33,0.7)",
-                          fontFamily: "'Work Sans', sans-serif",
-                          fontSize: "0.85rem",
-                          lineHeight: "1.6",
-                          margin: 0,
-                        }}
-                      >
-                        We offer competitive market-based pricing, fast transactions, and
-                        responsible processing. Whether you have a small load or a bulk
-                        shipment, we're ready to serve you.
-                      </p>
-                    </div>
-                  </div>
+                  
 
-                  {/* Other items in category */}
-                  <div>
+                  {/* Other items in category — desktop only, hidden on mobile since full list is below */}
+                  <div className="hidden md:block">
                     <p
                       style={{
                         color: "rgba(46,79,33,0.45)",
@@ -712,7 +538,7 @@ export default function ProductPage() {
                         Sell Your {activeItem.label} Now
                       </button>
                     </Link>
-                    <Link href="tel:09629305439" className="flex-1">
+                    <Link href="tel:0948 055 8001" className="flex-1">
                       <button
                         className="w-full py-3 rounded-full font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-95"
                         style={{
@@ -724,13 +550,166 @@ export default function ProductPage() {
                           cursor: "pointer",
                         }}
                       >
-                        📞 Call Us
+                        Call Us 0948 055 8001
                       </button>
                     </Link>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* ── SELL CTA — order 2 on mobile only (hidden on desktop, shown inside sidebar there) ── */}
+            <div
+              className="order-2 md:hidden rounded-2xl p-5 flex flex-col gap-3"
+              style={{ backgroundColor: "#2E4F21", border: "1px solid rgba(160,241,189,0.2)" }}
+            >
+              <p
+                style={{
+                  color: "#A0F1BD",
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: "0.85rem",
+                  fontWeight: "700",
+                  margin: 0,
+                }}
+              >
+                Ready to sell?
+              </p>
+              <p
+                style={{
+                  color: "rgba(160,241,189,0.7)",
+                  fontFamily: "'Work Sans', sans-serif",
+                  fontSize: "0.78rem",
+                  lineHeight: "1.6",
+                  margin: 0,
+                }}
+              >
+                Get the best price for your scrap materials today.
+              </p>
+              <Link href="/#contact-form">
+                <button
+                  className="w-full py-2 rounded-full transition-opacity hover:opacity-80"
+                  style={{
+                    backgroundColor: "#A0F1BD",
+                    color: "#2E4F21",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.82rem",
+                    fontWeight: "700",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  Message Us!
+                </button>
+              </Link>
+            </div>
+
+            {/* ── LEFT SIDEBAR — order 3 on mobile, left column on desktop ── */}
+            <aside
+              className="w-full md:w-64 shrink-0 flex flex-col gap-2 order-3 md:order-1"
+              style={{ alignSelf: "flex-start", position: "sticky", top: "89px" }}
+            >
+              {catalog.map((cat) => {
+                const isActiveCat = cat.slug === activeCatSlug;
+                return (
+                  <div key={cat.slug}>
+                    <button
+                      onClick={() => handleCategoryChange(cat.slug)}
+                      className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-150"
+                      style={{
+                        backgroundColor: isActiveCat ? "#2E4F21" : "transparent",
+                        color: isActiveCat ? "#A0F1BD" : "rgba(46,79,33,0.75)",
+                        fontFamily: "'Work Sans', sans-serif",
+                        fontSize: "0.9rem",
+                        fontWeight: isActiveCat ? "700" : "500",
+                        border: "none",
+                        cursor: "pointer",
+                      }}
+                    >
+                      <span style={{ fontSize: "1.1rem" }}>{cat.emoji}</span>
+                      {cat.label}
+                    </button>
+
+                    {isActiveCat && (
+                      <div className="flex flex-col ml-4 mt-1 mb-2 gap-0.5">
+                        {cat.items.map((item) => {
+                          const isActiveItem = item.slug === activeItemSlug;
+                          return (
+                            <button
+                              key={item.slug}
+                              onClick={() => handleItemChange(item.slug)}
+                              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150"
+                              style={{
+                                backgroundColor: isActiveItem ? "rgba(160,241,189,0.35)" : "transparent",
+                                color: isActiveItem ? "#2E4F21" : "rgba(46,79,33,0.55)",
+                                fontFamily: "'Work Sans', sans-serif",
+                                fontSize: "0.83rem",
+                                fontWeight: isActiveItem ? "600" : "400",
+                                borderTop: "none",
+                                borderRight: "none",
+                                borderBottom: "none",
+                                borderLeft: isActiveItem ? "3px solid #2E4F21" : "3px solid transparent",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {item.label}
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+
+              {/* Sell CTA in sidebar — desktop only (mobile version rendered separately above) */}
+              <div
+                className="mt-4 rounded-2xl p-5 hidden md:flex flex-col gap-3"
+                style={{
+                  backgroundColor: "#2E4F21",
+                  border: "1px solid rgba(160,241,189,0.2)",
+                }}
+              >
+                <p
+                  style={{
+                    color: "#A0F1BD",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.85rem",
+                    fontWeight: "700",
+                    margin: 0,
+                  }}
+                >
+                  Ready to sell?
+                </p>
+                <p
+                  style={{
+                    color: "rgba(160,241,189,0.7)",
+                    fontFamily: "'Work Sans', sans-serif",
+                    fontSize: "0.78rem",
+                    lineHeight: "1.6",
+                    margin: 0,
+                  }}
+                >
+                  Get the best price for your scrap materials today.
+                </p>
+                <Link href="/#contact-form">
+                  <button
+                    className="w-full py-2 rounded-full transition-opacity hover:opacity-80"
+                    style={{
+                      backgroundColor: "#A0F1BD",
+                      color: "#2E4F21",
+                      fontFamily: "'Work Sans', sans-serif",
+                      fontSize: "0.82rem",
+                      fontWeight: "700",
+                      border: "none",
+                      cursor: "pointer",
+                    }}
+                  >
+                    Message Us!
+                  </button>
+                </Link>
+              </div>
+            </aside>
+
           </div>
         </div>
       </main>

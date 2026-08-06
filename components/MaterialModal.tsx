@@ -7,10 +7,12 @@ export type ModalItem = {
   label: string;
   image: string;
   definition: string;
+  itemSlug: string; // slug of the catalog item this card links to
 };
 
 export type ModalContent = {
   title: string;
+  categorySlug: string; // slug of the catalog category this modal maps to
   definition: string;
   items: ModalItem[];
 };
@@ -18,36 +20,42 @@ export type ModalContent = {
 export const modalData: Record<string, ModalContent> = {
   "Ferrous Metals": {
     title: "Ferrous Metals",
+    categorySlug: "ferrous-metals",
     definition:
       "We buy all kinds of ferrous metals — from old steel beams and iron pipes to cast iron cookware, stainless steel scraps, and used tin cans. Ferrous metals are iron-based, magnetic, and among the most recycled materials in the world. Turn your rust and metal junk into cash with us.",
     items: [
       {
         label: "Steel",
         image: "/steel.png",
+        itemSlug: "steel",
         definition:
           "The most recycled metal globally — we buy steel bars, sheets, pipes, and structural scraps.",
       },
       {
         label: "Iron",
         image: "/iron.png",
+        itemSlug: "iron",
         definition:
           "We accept wrought iron and iron scraps from gates, fences, and old hardware.",
       },
       {
         label: "Cast Iron",
         image: "/cast iron.png",
+        itemSlug: "cast-iron",
         definition:
           "Heavy and dense — we buy cast iron pans, pipes, engine blocks, and machine parts.",
       },
       {
         label: "Stainless",
         image: "/stainless.png",
+        itemSlug: "stainless",
         definition:
           "We purchase stainless steel from kitchen equipment, sinks, railings, and industrial parts.",
       },
       {
         label: "Cans",
         image: "/cans.png",
+        itemSlug: "cans",
         definition:
           "We buy used tin and steel cans in bulk — from food cans to industrial containers.",
       },
@@ -55,42 +63,49 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Non-Ferrous Metals": {
     title: "Non-Ferrous Metals",
+    categorySlug: "non-ferrous-metals",
     definition:
       "We purchase all non-ferrous metals including copper wiring, brass fittings, bronze parts, aluminum scraps, tin, and zinc. These metals are free of iron, making them rust-resistant and highly valuable in the recycling market. Bring them in and get top peso for every kilo.",
     items: [
       {
         label: "Copper",
         image: "/copper.png",
+        itemSlug: "copper",
         definition:
           "High-value scrap — we buy copper wiring, pipes, coils, and fittings.",
       },
       {
         label: "Brass",
         image: "/brass.png",
+        itemSlug: "brass",
         definition:
           "We accept brass faucets, valves, fittings, and decorative hardware.",
       },
       {
         label: "Bronze",
         image: "/bronze.png",
+        itemSlug: "bronze",
         definition:
           "We buy bronze bushings, bearings, bells, and industrial castings.",
       },
       {
         label: "Aluminum",
         image: "/alu.png",
+        itemSlug: "aluminum",
         definition:
           "We purchase aluminum cans, sheets, frames, and extrusions.",
       },
       {
         label: "Tin",
         image: "/tin cans alu.png",
+        itemSlug: "tin",
         definition:
           "We buy tin-plated scraps, containers, and industrial tin materials.",
       },
       {
         label: "Zinc",
         image: "/zink.png",
+        itemSlug: "zinc",
         definition:
           "We accept zinc die-cast parts, galvanized scraps, and zinc alloys.",
       },
@@ -98,30 +113,35 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Vehicles & Parts": {
     title: "Vehicles & Parts",
+    categorySlug: "vehicles-parts",
     definition:
       "We buy old, damaged, or non-running vehicles and their parts — engines, transmissions, radiators, alternators, and batteries. Whether it's a whole unit or individual components, we assess and pay for it all. Don't let your old vehicle sit and rust — sell it to us.",
     items: [
       {
         label: "Engines",
         image: "/engines 1.png",
+        itemSlug: "engine",
         definition:
           "We buy whole engines or engine blocks from cars, trucks, and heavy equipment.",
       },
       {
         label: "More Engines",
         image: "/engines.png",
+        itemSlug: "transmission",
         definition:
           "All sorts of engine types accepted — gasoline, diesel, and industrial motors.",
       },
       {
         label: "Batteries",
         image: "/batteries.png",
+        itemSlug: "battery",
         definition:
           "We accept used lead-acid car batteries and industrial batteries.",
       },
       {
         label: "Radiators",
         image: "/radiators.png",
+        itemSlug: "radiator",
         definition:
           "We buy copper and aluminum radiators from all vehicle types.",
       },
@@ -129,12 +149,14 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Machinery & Equipment": {
     title: "Machinery & Equipment",
+    categorySlug: "machinery-equipment",
     definition:
       "We accept and purchase all types of industrial machinery and heavy equipment — generators, pumps, compressors, motors, and more. Decommissioned or broken, we'll buy it regardless of condition. No machine is too big or too worn down for us.",
     items: [
       {
         label: "Machines",
         image: "/machines.png",
+        itemSlug: "pumps",
         definition:
           "We buy all types of industrial machines — operational or decommissioned, big or small.",
       },
@@ -142,24 +164,28 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Home & Office Appliances": {
     title: "Home & Office Appliances",
+    categorySlug: "home-office-appliances",
     definition:
       "We buy used, broken, or outdated home and office appliances — TVs, refrigerators, aircons, computers, and more. Instead of throwing them out, sell them to us for responsible recycling and fair payment. We make it easy to clear out your space and earn from it.",
     items: [
       {
         label: "TV & Aircon",
         image: "/tv and aircon.png",
+        itemSlug: "tv",
         definition:
           "We buy old or broken TVs and air conditioning units of any brand or size.",
       },
       {
         label: "Refrigerators",
         image: "/refs.png",
+        itemSlug: "refrigerator",
         definition:
           "We accept all sizes of used or non-working refrigerators and freezers.",
       },
       {
         label: "Computers",
         image: "/computers.png",
+        itemSlug: "computer",
         definition:
           "We buy desktops, laptops, monitors, and computer peripherals for recycling.",
       },
@@ -167,18 +193,21 @@ export const modalData: Record<string, ModalContent> = {
   },
   "Plastics & Cartons": {
     title: "Plastics & Cartons",
+    categorySlug: "plastics-cartons",
     definition:
       "We buy recyclable plastics and cartons — PET bottles, HDPE containers, cardboard boxes, corrugated cartons, and industrial plastic scraps. Whether from your home, office, or warehouse, we take them in bulk or small loads. Help the environment and earn from your waste at the same time.",
     items: [
       {
         label: "Plastic",
-        image: "/plastic.png",
+        image: "/others.png",
+        itemSlug: "industrial-plastic",
         definition:
           "We buy PET bottles, HDPE containers, and all types of industrial plastic scraps.",
       },
       {
         label: "Cartons",
         image: "/cartons.png",
+        itemSlug: "cartons",
         definition:
           "We accept corrugated cardboard boxes and cartons in bulk from homes and businesses.",
       },
@@ -295,13 +324,16 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
               }}
             >
               {content.items.map((item) => (
-                <div
+                <Link
                   key={item.label}
-                  className="flex flex-col rounded-2xl overflow-hidden"
+                  href={`/products/${content.categorySlug}?item=${item.itemSlug}`}
+                  onClick={onClose}
+                  className="flex flex-col rounded-2xl overflow-hidden transition-transform duration-150 hover:scale-[1.02]"
                   style={{
                     border: "1.5px solid rgba(46,79,33,0.10)",
                     backgroundColor: "#fff",
                     boxShadow: "0 2px 12px rgba(46,79,33,0.07)",
+                    textDecoration: "none",
                   }}
                 >
                   {/* Image */}
@@ -349,7 +381,7 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
                       {item.definition}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

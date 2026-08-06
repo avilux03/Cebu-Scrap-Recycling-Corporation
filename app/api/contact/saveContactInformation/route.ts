@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { MailerSend, EmailParams, Sender, Recipient } from "mailersend"
+import nodemailer from "nodemailer";
 import { contactSchema } from "@/components/Contact/schema";
 
 interface HtmlParams {
@@ -31,8 +31,13 @@ const buildUserHtml = ({ fullName }: HtmlParams) => `
   <p><b>Cebu Scrap Recycling Corporation</b></p>
 `;
 
-const mailerSend = new MailerSend({
-  apiKey: process.env.MAILERSEND_API_KEY || "",
+// Gmail SMTP transporter
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.GMAIL_USER,
+    pass: process.env.GMAIL_APP_PASSWORD,
+  },
 });
 
 export async function POST(req: NextRequest) {
@@ -46,53 +51,47 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Validation failed" }, { status: 400 });
   }
 
-  const sender = new Sender(
-    process.env.MAIL_FROM_EMAIL || "",
-    process.env.MAIL_FROM_NAME || ""
-  );
-
   // Email 1: Notify admin with full inquiry details
-  const adminParams = new EmailParams()
-    .setFrom(sender)
-    .setTo([new Recipient(process.env.MAIL_TO_EMAIL || "")])
-    .setReplyTo(new Sender(data.email, data.fullName))
-    .setSubject(`New ${data.inquiryType === "sell" ? "Sell" : "Buy"} Inquiry from ${data.fullName}`)
-    .setHtml(buildAdminHtml({
-      fullName: data.fullName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      address: data.address,
-      inquiryType: data.inquiryType,
-      message: data.message,
-      imageUrl: data.imageUrl,
-    }));
-
-  // Email 2: Confirmation to user
-  const userParams = new EmailParams()
-    .setFrom(sender)
-    .setTo([new Recipient(data.email)])
-    .setReplyTo(sender)
-    .setSubject(`Cebu Scrap Recycling Corporation: We received your inquiry!`)
-    .setHtml(buildUserHtml({
-      fullName: data.fullName,
-      email: data.email,
-      phoneNumber: data.phoneNumber,
-      address: data.address,
-      inquiryType: data.inquiryType,
-      message: data.message,
-    }));
-
   try {
-    await mailerSend.email.send(adminParams);
+    await transporter.sendMail({
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,
+      to: process.env.MAIL_TO_EMAIL,
+      replyTo: data.email,
+      subject: `New ${data.inquiryType === "sell" ? "Sell" : "Buy"} Inquiry from ${data.fullName}`,
+      html: buildAdminHtml({
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
+        inquiryType: data.inquiryType,
+        message: data.message,
+        imageUrl: data.imageUrl,
+      }),
+    });
   } catch (err: any) {
-    console.error("MailerSend admin email error:", err?.body ?? err);
+    console.error("Gmail admin email error:", err?.message ?? err);
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 
-  // Non-blocking user confirmation
-  mailerSend.email.send(userParams).catch((err: any) => {
-    console.warn("MailerSend user confirmation failed:", err?.body ?? err);
-  });
+  // Email 2: Confirmation to user (non-blocking)
+  transporter
+    .sendMail({
+      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,
+      to: data.email,
+      replyTo: process.env.GMAIL_USER,
+      subject: `Cebu Scrap Recycling Corporation: We received your inquiry!`,
+      html: buildUserHtml({
+        fullName: data.fullName,
+        email: data.email,
+        phoneNumber: data.phoneNumber,
+        address: data.address,
+        inquiryType: data.inquiryType,
+        message: data.message,
+      }),
+    })
+    .catch((err: any) => {
+      console.warn("Gmail user confirmation failed:", err?.message ?? err);
+    });
 
   return NextResponse.json({ ok: true });
 }

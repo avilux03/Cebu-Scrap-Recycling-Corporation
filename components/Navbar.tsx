@@ -97,17 +97,12 @@ export default function Navbar() {
         {/* Main Bar */}
         <div
           className="w-full h-17.25 flex items-center justify-between mx-auto"
-          style={{ maxWidth: "100%", paddingLeft: "40px" }}
+          style={{ maxWidth: "100%", paddingLeft: "10px" }}
         >
-          {/* Logo — left side with padding */}
+          {/* Logo — left side with padding (tight on mobile, full on desktop) */}
           <Link
             href="/"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexShrink: 0,
-              paddingLeft: "35px",
-            }}
+            className="flex items-center shrink-0 pl-3 md:pl-8.75"
           >
             <Image
               src="/logo.png"
