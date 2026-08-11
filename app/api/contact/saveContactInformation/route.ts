@@ -12,9 +12,25 @@ interface HtmlParams {
   imageUrl?: string | null;
 }
 
+// Labels used inside the admin notification email
+const inquiryLabels: Record<string, string> = {
+  sell: "🟢 Sell to us",
+  buy: "🔵 Buy from us",
+  services: "🛠️ Avail Services",
+  others: "❓ Others",
+};
+
+// Labels used in the email subject line
+const inquirySubjectLabels: Record<string, string> = {
+  sell: "Sell",
+  buy: "Buy",
+  services: "Services",
+  others: "General",
+};
+
 const buildAdminHtml = ({ fullName, email, phoneNumber, address, inquiryType, message, imageUrl }: HtmlParams) => `
   <h2>New Inquiry from ${fullName}</h2>
-  <p><b>Type:</b> ${inquiryType === "sell" ? "🟢 Sell to us" : "🔵 Buy from us"}</p>
+  <p><b>Type:</b> ${inquiryLabels[inquiryType] ?? inquiryType}</p>
   <p><b>Name:</b> ${fullName}</p>
   <p><b>Email:</b> ${email}</p>
   <p><b>Phone:</b> ${phoneNumber}</p>
@@ -57,7 +73,7 @@ export async function POST(req: NextRequest) {
       from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,
       to: process.env.MAIL_TO_EMAIL,
       replyTo: data.email,
-      subject: `New ${data.inquiryType === "sell" ? "Sell" : "Buy"} Inquiry from ${data.fullName}`,
+      subject: `New ${inquirySubjectLabels[data.inquiryType] ?? "General"} Inquiry from ${data.fullName}`,
       html: buildAdminHtml({
         fullName: data.fullName,
         email: data.email,
@@ -73,9 +89,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 
-  // Email 2: Confirmation to user (non-blocking)
-  transporter
-    .sendMail({
+  // Email 2: Confirmation to user.
+  // IMPORTANT: this must be awaited. On serverless hosts (Netlify, Vercel,
+  // etc.) the function's execution environment can be frozen or torn down
+  // the moment a response is returned — an un-awaited sendMail() call gets
+  // killed mid-flight and the confirmation email never actually goes out,
+  // even though it appears to "work" during local `next dev` (a long-lived
+  // process that lets background promises finish naturally).
+  try {
+    await transporter.sendMail({
       from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,
       to: data.email,
       replyTo: process.env.GMAIL_USER,
@@ -88,10 +110,12 @@ export async function POST(req: NextRequest) {
         inquiryType: data.inquiryType,
         message: data.message,
       }),
-    })
-    .catch((err: any) => {
-      console.warn("Gmail user confirmation failed:", err?.message ?? err);
     });
+  } catch (err: any) {
+    // Don't fail the whole request just because the confirmation email
+    // failed — the admin has already been notified of the inquiry.
+    console.warn("Gmail user confirmation failed:", err?.message ?? err);
+  }
 
   return NextResponse.json({ ok: true });
 }

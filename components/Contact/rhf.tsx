@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from "react"
+import React, { useState, useRef } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { contactSchema } from "./schema"
@@ -15,7 +15,7 @@ type ContactFormData = {
   email: string
   phoneNumber: string
   address: string
-  inquiryType: "sell" | "buy" | "services" | "others"
+  inquiryType: "" | "sell" | "buy" | "services" | "others"
   message: string
   imageUrl?: string | null
   consent: boolean
@@ -23,7 +23,20 @@ type ContactFormData = {
 
 type SubmitStatus = "idle" | "success" | "error"
 
+const defaultFormValues: ContactFormData = {
+  fullName: "",
+  email: "",
+  phoneNumber: "",
+  address: "",
+  inquiryType: "",
+  message: "",
+  imageUrl: null,
+  consent: false,
+}
+
 export default function ContactFormRHF(): React.ReactElement {
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [imagePreview, setImagePreview] = useState<string | null>(null)
   const [uploadError, setUploadError] = useState<string | null>(null)
@@ -37,6 +50,7 @@ export default function ContactFormRHF(): React.ReactElement {
     reset,
   } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema) as any,
+    defaultValues: defaultFormValues,
   })
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
@@ -85,9 +99,18 @@ export default function ContactFormRHF(): React.ReactElement {
       if (!res.ok) throw new Error("Our server couldn't process your message. Please try again shortly.")
 
       setSubmitStatus("success")
-      reset()
+
+      // Reset to explicit defaults (not {}), so a second submit in the
+      // same session behaves exactly like a fresh page load.
+      reset(defaultFormValues)
       setImageFile(null)
       setImagePreview(null)
+
+      // The native <input type="file"> keeps its selected file internally
+      // even after React state is cleared — clear it directly via ref.
+      if (fileInputRef.current) {
+        fileInputRef.current.value = ""
+      }
 
       setTimeout(() => setSubmitStatus("idle"), 8000)
     } catch (err: unknown) {
@@ -434,6 +457,7 @@ export default function ContactFormRHF(): React.ReactElement {
                 </>
               )}
               <input
+                ref={fileInputRef}
                 type="file"
                 accept="image/*"
                 onChange={handleImageChange}
@@ -444,7 +468,11 @@ export default function ContactFormRHF(): React.ReactElement {
             {imagePreview && (
               <button
                 type="button"
-                onClick={() => { setImageFile(null); setImagePreview(null) }}
+                onClick={() => {
+                  setImageFile(null)
+                  setImagePreview(null)
+                  if (fileInputRef.current) fileInputRef.current.value = ""
+                }}
                 style={{
                   background: "none",
                   border: "none",
