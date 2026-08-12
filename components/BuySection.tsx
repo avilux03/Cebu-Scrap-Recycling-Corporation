@@ -127,7 +127,7 @@ export default function BuySection() {
           <h2 style={{ color: "#2E4F21", fontFamily: "'Work Sans', sans-serif", fontSize: "clamp(2rem, 5vw, 3.2rem)", fontWeight: 700, letterSpacing: "-0.02em" }}>
             Buy From Us
           </h2>
-          <div className="rounded-full" style={{ width: 60, height: 4, backgroundColor: "#A0F1BD" }} />
+          <div className="rounded-full" style={{ width: 60, height: 4, backgroundColor: "#2E4F21" }} />
           <p style={{ color: "#3a3a3a", fontFamily: "'Work Sans', sans-serif", fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", fontWeight: 400, maxWidth: 520, lineHeight: "1.7" }}>
             Quality, affordable recycled materials ready for reuse — perfect for construction, repairs, and everyday needs.
           </p>
@@ -167,7 +167,7 @@ export default function BuySection() {
           <h3 style={{ color: "#2E4F21", fontFamily: "'Work Sans', sans-serif", fontSize: "clamp(1.1rem, 2.5vw, 1.4rem)", fontWeight: 700, letterSpacing: "-0.01em" }}>
             {activeCategory.label}
           </h3>
-          <div style={{ width: 40, height: 3, borderRadius: 99, backgroundColor: "#A0F1BD" }} />
+          <div style={{ width: 40, height: 3, borderRadius: 99, backgroundColor: "#2E4F21" }} />
         </div>
 
         {/* Product Grid */}

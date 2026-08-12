@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { buyCatalog } from "@/lib/buyCatalog";
 
@@ -41,12 +40,10 @@ export default function BuyProductPage() {
 
   return (
     <>
-      <Navbar />
-
       <main style={{ backgroundColor: "#f7fef9", minHeight: "100vh" }}>
         {/* Hero Banner */}
         <div
-          style={{ backgroundColor: "#A0F1BD", borderBottom: "1px solid rgba(46,79,33,0.12)" }}
+          style={{ backgroundColor: "#ffffff", borderBottom: "1px solid rgba(46,79,33,0.12)" }}
           className="px-6 md:px-12 py-10"
         >
           <div className="mx-auto" style={{ maxWidth: "1280px" }}>
@@ -140,7 +137,7 @@ export default function BuyProductPage() {
                     <span style={{ fontSize: "0.9rem" }}>{activeCategory.emoji}</span>
                     <span
                       style={{
-                        color: "#A0F1BD",
+                        color: "#ffffff",
                         fontFamily: "'Work Sans', sans-serif",
                         fontSize: "0.75rem",
                         fontWeight: 600,
@@ -167,7 +164,7 @@ export default function BuyProductPage() {
                     >
                       {activeItem.label}
                     </h2>
-                    <div className="mt-2 rounded-full" style={{ width: "48px", height: "4px", backgroundColor: "#A0F1BD" }} />
+                    <div className="mt-2 rounded-full" style={{ width: "48px", height: "4px", backgroundColor: "#2E4F21" }} />
                   </div>
 
                   {/* Tag badge */}
@@ -232,7 +229,7 @@ export default function BuyProductPage() {
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.backgroundColor = "#2E4F21";
-                              e.currentTarget.style.color = "#A0F1BD";
+                              e.currentTarget.style.color = "#ffffff";
                             }}
                             onMouseLeave={(e) => {
                               e.currentTarget.style.backgroundColor = "rgba(46,79,33,0.06)";
@@ -285,19 +282,19 @@ export default function BuyProductPage() {
             {/* ── MESSAGE US — order 2 on mobile only (hidden on desktop, shown inside sidebar there) ── */}
             <div
               className="order-2 md:hidden rounded-2xl p-5 flex flex-col gap-3"
-              style={{ backgroundColor: "#2E4F21", border: "1px solid rgba(160,241,189,0.2)" }}
+              style={{ backgroundColor: "#2E4F21", border: "1px solid rgba(255,255,255,0.15)" }}
             >
-              <p style={{ color: "#A0F1BD", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>
+              <p style={{ color: "#ffffff", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>
                 Ready to buy?
               </p>
-              <p style={{ color: "rgba(160,241,189,0.7)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.78rem", lineHeight: "1.6", margin: 0 }}>
+              <p style={{ color: "rgba(255,255,255,0.75)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.78rem", lineHeight: "1.6", margin: 0 }}>
                 Get pricing and availability for your project today.
               </p>
               <Link href="/#contact-form">
                 <button
                   className="w-full py-2 rounded-full transition-opacity hover:opacity-80"
                   style={{
-                    backgroundColor: "#A0F1BD",
+                    backgroundColor: "#ffffff",
                     color: "#2E4F21",
                     fontFamily: "'Work Sans', sans-serif",
                     fontSize: "0.82rem",
@@ -325,7 +322,7 @@ export default function BuyProductPage() {
                       className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all duration-150"
                       style={{
                         backgroundColor: isActiveCat ? "#2E4F21" : "transparent",
-                        color: isActiveCat ? "#A0F1BD" : "rgba(46,79,33,0.75)",
+                        color: isActiveCat ? "#ffffff" : "rgba(46,79,33,0.75)",
                         fontFamily: "'Work Sans', sans-serif",
                         fontSize: "0.9rem",
                         fontWeight: isActiveCat ? 700 : 500,
@@ -347,7 +344,7 @@ export default function BuyProductPage() {
                               onClick={() => handleItemChange(item.slug)}
                               className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-left transition-all duration-150"
                               style={{
-                                backgroundColor: isActiveItem ? "rgba(160,241,189,0.35)" : "transparent",
+                                backgroundColor: isActiveItem ? "rgba(46,79,33,0.10)" : "transparent",
                                 color: isActiveItem ? "#2E4F21" : "rgba(46,79,33,0.55)",
                                 fontFamily: "'Work Sans', sans-serif",
                                 fontSize: "0.83rem",
@@ -372,19 +369,19 @@ export default function BuyProductPage() {
               {/* Message Us box — desktop only inside sidebar (mobile version rendered separately above) */}
               <div
                 className="mt-4 rounded-2xl p-5 hidden md:flex flex-col gap-3"
-                style={{ backgroundColor: "#2E4F21", border: "1px solid rgba(160,241,189,0.2)" }}
+                style={{ backgroundColor: "#2E4F21", border: "1px solid rgba(255,255,255,0.15)" }}
               >
-                <p style={{ color: "#A0F1BD", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>
+                <p style={{ color: "#ffffff", fontFamily: "'Work Sans', sans-serif", fontSize: "0.85rem", fontWeight: 700, margin: 0 }}>
                   Ready to buy?
                 </p>
-                <p style={{ color: "rgba(160,241,189,0.7)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.78rem", lineHeight: "1.6", margin: 0 }}>
+                <p style={{ color: "rgba(255,255,255,0.75)", fontFamily: "'Work Sans', sans-serif", fontSize: "0.78rem", lineHeight: "1.6", margin: 0 }}>
                   Get pricing and availability for your project today.
                 </p>
                 <Link href="/#contact-form">
                   <button
                     className="w-full py-2 rounded-full transition-opacity hover:opacity-80"
                     style={{
-                      backgroundColor: "#A0F1BD",
+                      backgroundColor: "#ffffff",
                       color: "#2E4F21",
                       fontFamily: "'Work Sans', sans-serif",
                       fontSize: "0.82rem",

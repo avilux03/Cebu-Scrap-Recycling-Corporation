@@ -89,13 +89,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 
-  // Email 2: Confirmation to user.
-  // IMPORTANT: this must be awaited. On serverless hosts (Netlify, Vercel,
-  // etc.) the function's execution environment can be frozen or torn down
-  // the moment a response is returned — an un-awaited sendMail() call gets
-  // killed mid-flight and the confirmation email never actually goes out,
-  // even though it appears to "work" during local `next dev` (a long-lived
-  // process that lets background promises finish naturally).
+  
   try {
     await transporter.sendMail({
       from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,

@@ -46,7 +46,7 @@ export default function Footer() {
   return (
     <footer style={{ backgroundColor: "#1a3a0e" }} className="w-full">
       {/* Top divider accent */}
-      <div style={{ height: "4px", backgroundColor: "#A0F1BD" }} />
+      <div style={{ height: "4px", backgroundColor: "#ffffff" }} />
 
       <div
         className="mx-auto px-6 md:px-12 py-12 md:py-16"

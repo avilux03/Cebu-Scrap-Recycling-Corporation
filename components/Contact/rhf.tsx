@@ -324,6 +324,7 @@ export default function ContactFormRHF(): React.ReactElement {
             <label style={labelStyle}>I want to</label>
             <select
               {...register("inquiryType")}
+              defaultValue=""
               style={{
                 ...inputStyle,
                 cursor: "pointer",
@@ -334,7 +335,7 @@ export default function ContactFormRHF(): React.ReactElement {
                 paddingRight: "40px",
               }}
             >
-              <option value="" style={{ backgroundColor: "#2E4F21" }}>Select an option...</option>
+              <option value="" hidden disabled style={{ backgroundColor: "#2E4F21" }}>Select an option...</option>
               <option value="sell" style={{ backgroundColor: "#2E4F21" }}>Sell to you (I have scrap)</option>
               <option value="buy" style={{ backgroundColor: "#2E4F21" }}>Buy from you (I need materials)</option>
               <option value="services" style={{ backgroundColor: "#2E4F21" }}>Avail your Services</option>
