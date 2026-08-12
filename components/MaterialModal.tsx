@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 export type ModalItem = {
@@ -220,8 +220,30 @@ type Props = {
   onClose: () => void;
 };
 
+const CLOSE_ANIMATION_MS = 220;
+
 export default function MaterialModal({ materialKey, onClose }: Props) {
   const content = materialKey ? modalData[materialKey] : null;
+
+  // Keeps the modal mounted slightly after `content` becomes null so the
+  // exit animation can play instead of the modal disappearing instantly.
+  const [shouldRender, setShouldRender] = useState(false);
+  // Drives the actual opacity/transform transition.
+  const [animateIn, setAnimateIn] = useState(false);
+
+  useEffect(() => {
+    if (content) {
+      setShouldRender(true);
+      // Wait a frame so the browser registers the initial (hidden) state
+      // before flipping to visible — otherwise the transition is skipped.
+      const raf = requestAnimationFrame(() => setAnimateIn(true));
+      return () => cancelAnimationFrame(raf);
+    } else {
+      setAnimateIn(false);
+      const timeout = setTimeout(() => setShouldRender(false), CLOSE_ANIMATION_MS);
+      return () => clearTimeout(timeout);
+    }
+  }, [content]);
 
   useEffect(() => {
     if (content) {
@@ -242,7 +264,12 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
     return () => window.removeEventListener("keydown", handleKey);
   }, [onClose]);
 
-  if (!content) return null;
+  if (!shouldRender) return null;
+
+  // Fall back to the last-known content while animating out, so the modal
+  // doesn't flash empty during the exit transition.
+  const displayContent = content ?? (materialKey ? modalData[materialKey] : null);
+  if (!displayContent) return null;
 
   return (
     <>
@@ -250,7 +277,12 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
       <div
         onClick={onClose}
         className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
-        style={{ backgroundColor: "rgba(10, 25, 10, 0.72)", backdropFilter: "blur(4px)" }}
+        style={{
+          backgroundColor: "rgba(10, 25, 10, 0.72)",
+          backdropFilter: "blur(4px)",
+          opacity: animateIn ? 1 : 0,
+          transition: `opacity ${CLOSE_ANIMATION_MS}ms ease`,
+        }}
       >
         {/* Modal Panel */}
         <div
@@ -260,6 +292,11 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
             backgroundColor: "#F7FFF9",
             maxHeight: "92dvh",
             boxShadow: "0 32px 80px rgba(0,0,0,0.35)",
+            opacity: animateIn ? 1 : 0,
+            transform: animateIn
+              ? "translateY(0) scale(1)"
+              : "translateY(24px) scale(0.96)",
+            transition: `opacity ${CLOSE_ANIMATION_MS}ms ease, transform ${CLOSE_ANIMATION_MS}ms cubic-bezier(0.34,1.2,0.64,1)`,
           }}
         >
           {/* ── Header ── */}
@@ -269,19 +306,19 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
           >
             <h2
               style={{
-                color: "#A0F1BD",
+                color: "#ffffff",
                 fontFamily: "'Work Sans', sans-serif",
                 fontSize: "clamp(1.1rem, 4vw, 1.4rem)",
                 fontWeight: "700",
                 letterSpacing: "-0.01em",
               }}
             >
-              {content.title}
+              {displayContent.title}
             </h2>
             <button
               onClick={onClose}
               className="flex items-center justify-center w-9 h-9 rounded-full transition-all duration-200 hover:scale-110 active:scale-95"
-              style={{ backgroundColor: "rgba(160,241,189,0.15)", color: "#A0F1BD" }}
+              style={{ backgroundColor: "rgba(255,255,255,0.15)", color: "#ffffff" }}
               aria-label="Close modal"
             >
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -308,7 +345,7 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
                 fontWeight: "400",
               }}
             >
-              {content.definition}
+              {displayContent.definition}
             </p>
 
             {/* Divider */}
@@ -318,15 +355,15 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
             <div
               className="grid gap-4"
               style={{
-                gridTemplateColumns: content.items.length === 1
+                gridTemplateColumns: displayContent.items.length === 1
                   ? "1fr"
                   : "repeat(auto-fill, minmax(140px, 1fr))",
               }}
             >
-              {content.items.map((item) => (
+              {displayContent.items.map((item) => (
                 <Link
                   key={item.label}
-                  href={`/products/${content.categorySlug}?item=${item.itemSlug}`}
+                  href={`/products/${displayContent.categorySlug}?item=${item.itemSlug}`}
                   onClick={onClose}
                   className="flex flex-col rounded-2xl overflow-hidden transition-transform duration-150 hover:scale-[1.02]"
                   style={{
@@ -341,7 +378,7 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
                     className="w-full"
                     style={{
                       height: "120px",
-                      backgroundColor: "rgba(160,241,189,0.15)",
+                      backgroundColor: "rgba(46,79,33,0.08)",
                       overflow: "hidden",
                       position: "relative",
                     }}
@@ -399,7 +436,7 @@ export default function MaterialModal({ materialKey, onClose }: Props) {
                 className="w-full py-3.5 rounded-full font-semibold flex items-center justify-center gap-2 transition-all duration-200 hover:opacity-90 hover:scale-[1.02] active:scale-95"
                 style={{
                   backgroundColor: "#2E4F21",
-                  color: "#A0F1BD",
+                  color: "#ffffff",
                   fontFamily: "'Work Sans', sans-serif",
                   fontSize: "16px",
                   letterSpacing: "0.02em",
