@@ -197,7 +197,7 @@ export default function Footer() {
               </h4>
               <div className="flex flex-col gap-2">
                 <a
-                  href="tel:09480558001"
+                  href="tel:0994 970 6760"
                   style={{
                     color: "rgba(255,255,255,0.7)",
                     fontFamily: "'Work Sans', sans-serif",
@@ -208,7 +208,7 @@ export default function Footer() {
                   onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
                   onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.7)")}
                 >
-                  0948 055 8001
+                  0994 970 6760
                 </a>
                 <a
                   href="mailto:contact@cebuscrap.com"
