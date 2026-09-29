@@ -41,7 +41,7 @@ const contactColumns: ContactColumn[] = [
   {
     title: "Phone & Email",
     lines: [
-      { text: "0948 055 8001", href: "tel:09480558001", icon: null },
+      { text: "0994 970 6760", href: "tel:09949706760", icon: null },
       { text: "contact@cebuscrap.com", href: "https://mail.google.com/mail/?view=cm&fs=1&to=contact@cebuscrap.com", icon: null },
     ],
   },
