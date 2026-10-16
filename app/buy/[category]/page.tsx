@@ -259,7 +259,7 @@ export default function BuyProductPage() {
                         Buy {activeItem.label} Now
                       </button>
                     </Link>
-                    <Link href="tel:0948 055 8001" className="flex-1">
+                    <Link href="tel:0994 970 6760" className="flex-1">
                       <button
                         className="w-full py-3 rounded-full font-semibold transition-all duration-200 hover:scale-[1.02] active:scale-95"
                         style={{
@@ -271,7 +271,7 @@ export default function BuyProductPage() {
                           cursor: "pointer",
                         }}
                       >
-                       Call Us 0948 055 8001
+                       Call Us 0994 970 6760
                       </button>
                     </Link>
                   </div>
