@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { contactSchema } from "./schema"
@@ -17,6 +17,8 @@ type ContactFormData = {
   address: string
   inquiryType: "" | "sell" | "buy" | "services" | "others"
   message: string
+  minSellPrice?: number | string
+  priceUnit: "kg" | "piece" | "lot"
   imageUrl?: string | null
   consent: boolean
 }
@@ -30,6 +32,8 @@ const defaultFormValues: ContactFormData = {
   address: "",
   inquiryType: "",
   message: "",
+  minSellPrice: "",
+  priceUnit: "kg",
   imageUrl: null,
   consent: false,
 }
@@ -48,10 +52,25 @@ export default function ContactFormRHF(): React.ReactElement {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
+    watch,
+    setValue,
+    clearErrors,
   } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema) as any,
     defaultValues: defaultFormValues,
   })
+
+  const inquiryType = watch("inquiryType")
+  const priceUnit = watch("priceUnit")
+
+  // Clear the price fields when the user switches away from "sell"
+  useEffect(() => {
+    if (inquiryType !== "sell") {
+      setValue("minSellPrice", "")
+      setValue("priceUnit", "kg")
+      clearErrors(["minSellPrice", "priceUnit"])
+    }
+  }, [inquiryType, setValue, clearErrors])
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const file = e.target.files?.[0]
@@ -90,10 +109,17 @@ export default function ContactFormRHF(): React.ReactElement {
         if (!imageUrl) throw new Error("Image upload failed. Please try again.")
       }
 
+      // Only send the price fields when the inquiry is "sell"
+      const payload: Record<string, unknown> = { ...data, imageUrl }
+      if (data.inquiryType !== "sell") {
+        delete payload.minSellPrice
+        delete payload.priceUnit
+      }
+
       const res = await fetch("/api/contact/saveContactInformation", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...data, imageUrl }),
+        body: JSON.stringify(payload),
       })
 
       if (!res.ok) throw new Error("Our server couldn't process your message. Please try again shortly.")
@@ -344,6 +370,69 @@ export default function ContactFormRHF(): React.ReactElement {
             {errors.inquiryType && <p style={errorStyle}>{errors.inquiryType.message}</p>}
           </div>
 
+          {/* Minimum Sell Price (only when "Sell to you") */}
+          {inquiryType === "sell" && (
+            <div className="flex flex-col gap-1.5">
+              <label style={labelStyle}>Minimum Sell Price</label>
+              <div className="flex gap-3">
+                <div className="relative flex-1">
+                  <span
+                    style={{
+                      position: "absolute",
+                      left: "16px",
+                      top: "50%",
+                      transform: "translateY(-50%)",
+                      color: "rgba(255,255,255,0.7)",
+                      fontFamily: "'Work Sans', sans-serif",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    ₱
+                  </span>
+                  <input
+                    {...register("minSellPrice")}
+                    type="number"
+                    inputMode="decimal"
+                    step="0.01"
+                    min="0"
+                    placeholder="e.g. 25.00"
+                    style={priceInputStyle}
+                    onFocus={(e: React.FocusEvent<HTMLInputElement>) =>
+                      Object.assign(e.target.style, { ...priceInputStyle, ...inputFocusStyle, paddingLeft: "34px" })
+                    }
+                    onBlur={(e: React.FocusEvent<HTMLInputElement>) =>
+                      Object.assign(e.target.style, priceInputStyle)
+                    }
+                  />
+                </div>
+                <select
+                  {...register("priceUnit")}
+                  style={{
+                    ...inputStyle,
+                    width: "140px",
+                    cursor: "pointer",
+                    appearance: "none",
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.6)' d='M6 8L1 3h10z'/%3E%3C/svg%3E")`,
+                    backgroundRepeat: "no-repeat",
+                    backgroundPosition: "right 14px center",
+                    paddingRight: "36px",
+                  }}
+                >
+                  <option value="kg" style={{ backgroundColor: "#2E4F21" }}>per kg</option>
+                  <option value="piece" style={{ backgroundColor: "#2E4F21" }}>per piece</option>
+                  <option value="lot" style={{ backgroundColor: "#2E4F21" }}>per lot</option>
+                </select>
+              </div>
+              {priceUnit === "lot" && (
+                <p style={{ ...errorStyle, color: "rgba(255,255,255,0.6)" }}>
+                  Please describe the lot (items and estimated weight) in the Message box.
+                </p>
+              )}
+              {errors.minSellPrice && <p style={errorStyle}>{errors.minSellPrice.message}</p>}
+              {errors.priceUnit && <p style={errorStyle}>{errors.priceUnit.message}</p>}
+            </div>
+          )}
+
           {/* Full Name */}
           <div className="flex flex-col gap-1.5">
             <label style={labelStyle}>Full Name</label>
@@ -583,6 +672,13 @@ const inputFocusStyle: React.CSSProperties = {
   ...inputStyle,
   border: "1.5px solid #A0F1BD",
   backgroundColor: "rgba(160,241,189,0.08)",
+}
+
+// Same as inputStyle but with extra left padding so the "₱" sign
+// never overlaps the number being typed.
+const priceInputStyle: React.CSSProperties = {
+  ...inputStyle,
+  paddingLeft: "34px",
 }
 
 const errorStyle: React.CSSProperties = {
