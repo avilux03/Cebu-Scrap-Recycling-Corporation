@@ -10,6 +10,8 @@ interface HtmlParams {
   inquiryType: string;
   message: string;
   imageUrl?: string | null;
+  minSellPrice?: number | null;
+  priceUnit?: string | null;
 }
 
 // Labels used inside the admin notification email
@@ -28,13 +30,35 @@ const inquirySubjectLabels: Record<string, string> = {
   others: "General",
 };
 
-const buildAdminHtml = ({ fullName, email, phoneNumber, address, inquiryType, message, imageUrl }: HtmlParams) => `
+// Labels for the price unit shown in the admin email
+const priceUnitLabels: Record<string, string> = {
+  kg: "per kg",
+  piece: "per piece",
+  lot: "per lot",
+};
+
+const buildAdminHtml = ({
+  fullName,
+  email,
+  phoneNumber,
+  address,
+  inquiryType,
+  message,
+  imageUrl,
+  minSellPrice,
+  priceUnit,
+}: HtmlParams) => `
   <h2>New Inquiry from ${fullName}</h2>
   <p><b>Type:</b> ${inquiryLabels[inquiryType] ?? inquiryType}</p>
   <p><b>Name:</b> ${fullName}</p>
   <p><b>Email:</b> ${email}</p>
   <p><b>Phone:</b> ${phoneNumber}</p>
   <p><b>Address:</b> ${address}</p>
+  ${
+    inquiryType === "sell" && minSellPrice != null
+      ? `<p><b>Minimum Sell Price:</b> ₱${Number(minSellPrice).toLocaleString("en-PH", { minimumFractionDigits: 2 })} ${priceUnitLabels[priceUnit ?? "kg"] ?? ""}</p>`
+      : ""
+  }
   <p><b>Message:</b></p>
   <p>${message}</p>
   ${imageUrl ? `<p><b>Attached Photo:</b> <a href="${imageUrl}" target="_blank">View Image</a></p>` : ""}
@@ -82,6 +106,8 @@ export async function POST(req: NextRequest) {
         inquiryType: data.inquiryType,
         message: data.message,
         imageUrl: data.imageUrl,
+        minSellPrice: data.minSellPrice,
+        priceUnit: data.priceUnit,
       }),
     });
   } catch (err: any) {
@@ -89,7 +115,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Failed to send email" }, { status: 500 });
   }
 
-  
+  // Email 2: Confirmation to the customer
   try {
     await transporter.sendMail({
       from: `"${process.env.MAIL_FROM_NAME}" <${process.env.GMAIL_USER}>`,
